@@ -1,0 +1,5 @@
+**/_build
+.DS_Store
+**/.ipynb_checkpoints
+**tar.gz
+course1-image-classification/cifar-10-batches-py
