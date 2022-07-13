@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Evolve a training recipe for image classification
+title: Evolve model training recipes for image classification
 author: KUNGFU.AI
 # logo: logo.png
 
