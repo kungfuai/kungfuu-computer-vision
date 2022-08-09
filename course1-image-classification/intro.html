@@ -21,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +37,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -299,7 +299,7 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
-<p><strong>Intended audience</strong>: Software engineers or ML engineers, who are familiar with Python and have some exposure to computer vision. If not, do not worry. A good place to start is <a class="reference external" href="https://course18.fast.ai/lessons/lesson1.html">this video</a> and <a class="reference external" href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html">this tutorial</a>.</p>
+<p><strong>Intended audience</strong>: Software engineers or ML engineers, who are familiar with Python and have some exposure to computer vision. If not, do not worry. A good place to start is <a class="reference external" href="https://course18.fast.ai/lessons/lesson1.html">this video</a> and <a class="reference external" href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html">this tutorial</a>. Familiarity with Python and Jupyter Notebook (<a class="reference external" href="https://www.theclickreader.com/jupyter-notebook-tutorial/">quickstart</a>) is needed.</p>
 <p><strong>What you will learn</strong>: Using the image classification task as an example, get familiar with model design choices for image backbone, preprocessing, augmentation and optimizers. Go through the process of finding the right recipe. Understand why certain choices are made for different pieces of the training algorithm (e.g. when and why image augmentation is needed). The course focuses on the variable part of the training recipe, rather than the boilerplates that we don’t usually need to experiment with. The workflow and activities in this course are intended to reflect a practical project with an intention to be deployed to production.</p>
 <p>At the end of the course. we hope you feel prepared to work on a practical project using image classification. More specifically, you would be able to</p>
 <ul class="simple">
@@ -307,6 +307,8 @@ title="Print to PDF"
 <li><p>Have a working model file and python “predictor” class that can be loaded and make predictions on new images.</p></li>
 <li><p>A report that explains what design choices are explored and what are their impact are on CIFAR10.</p></li>
 </ul>
+<p><strong>How to use the course materials and organize your work</strong></p>
+<p>You can run the code in each course project using Colab notebooks, whenever you see a rocket-shaped launch button in the top right corner of the page. This is a quick way to get started, without needing to install CUDA drivers and other dependencies. Alternatively, you can create a repo and accumulate source code as you evolve it in the course. Either way works.</p>
 <p>The course is orgaized as the following course projects:</p>
 <div class="toctree-wrapper compound">
 <ul>

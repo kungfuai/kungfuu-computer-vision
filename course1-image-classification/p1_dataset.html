@@ -21,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +37,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -451,7 +451,8 @@ title="Print to PDF"
 <p>One of the first things you may need to do in a practical project is to create a custom dataset class. As a start, let us use CIFAR10 raw data as an example to create one. First, we need to download the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please makse sure to remove the exclamation mark if you run the commands in the terminal.</span>
+<span class="o">!</span>wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
 <span class="o">!</span>tar -xzf cifar-10-python.tar.gz
 </pre></div>
 </div>
@@ -479,9 +480,9 @@ title="Print to PDF"
 </div>
 </div>
 <p>The archive contains the files data_batch_1, data_batch_2, …, data_batch_5, as well as test_batch. Each of these files is a Python “pickled” object.</p>
-<p>Loaded using the <code class="docutils literal notranslate"><span class="pre">unpickle</span></code> method provided below, each of the batch files contains a dictionary with the following elements:</p>
+<p>Loaded using the <code class="docutils literal notranslate"><span class="pre">unpickle</span></code> method provided below, each of the batch files contains a python dictionary with the following elements:</p>
 <p><em>data</em> – a 10000x3072 numpy array of uint8s. Each row of the array stores a 32x32 colour image. The first 1024 entries contain the red channel values, the next 1024 the green, and the final 1024 the blue. The image is stored in row-major order, so that the first 32 entries of the array are the red channel values of the first row of the image.</p>
-<p><em>labels</em> – a list of 10000 numbers in the range 0-9.</p>
+<p><em>labels</em> – a list of 10000 numbers in the range 0-9. Each number maps to a class label. For information about the 10 classes, please refer to the <a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 website</a>.</p>
 <p><strong>Your task</strong>: Fill in the missing code in the next cell, so that it can pass the test that follows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,18 +492,21 @@ title="Print to PDF"
 <span class="k">def</span> <span class="nf">unpickle</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
         <span class="nb">dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fo</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;bytes&#39;</span><span class="p">)</span>
+    <span class="c1"># The keys of this dic: [b&#39;batch_label&#39;, b&#39;labels&#39;, b&#39;data&#39;, b&#39;filenames&#39;]</span>
     <span class="k">return</span> <span class="nb">dict</span>
 
 
 <span class="k">def</span> <span class="nf">reshape_numpy_image</span><span class="p">(</span><span class="n">one_numpy_image</span><span class="p">):</span>
-    <span class="c1"># TODO: which of the following is correct?</span>
-    <span class="n">shape_with_channels_last</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">shape_with_channels_first</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+    <span class="c1"># TODO: which of the following should we pick? In the later sections, when you visualize the images, you will see if the image makes sense.</span>
+    <span class="c1">#   There is no single correct way, but it needs to be consistent with the rest of your code.</span>
+    <span class="c1">#   Channel first and channel last can be a common source of bug.</span>
+    <span class="n">shape_with_channels_last</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (height, width, channels), channels last</span>
+    <span class="n">shape_with_channels_first</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>  <span class="c1"># (channels, height, width), channels first</span>
     <span class="k">return</span> <span class="n">one_numpy_image</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">shape_with_channels_last</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">CustomDataset</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="c1"># TODO: if train is True, load the training data (data_batch_1 through 5), otherwise load the validation data (test_data_batch).</span>
         <span class="o">...</span>
 
@@ -535,7 +539,14 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>If it works, congratulations! You have completed the first step of the project.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: add a test to check if the dataset behaves the same as the `CIFAR10` class in `torchvision`.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the tests works, congratulations! You have completed the first step of the project.</p>
 </section>
 <section id="step-2-visualize-the-image-data">
 <h2>Step 2: Visualize the image data<a class="headerlink" href="#step-2-visualize-the-image-data" title="Permalink to this headline">#</a></h2>
@@ -548,11 +559,13 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">display_image_with_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># TODO: add code to display at least 2 images from CustomDataset.</span>
+<span class="c1"># TODO: add code to the next cells to display at least 2 images from CustomDataset.</span>
 <span class="c1"># You can use one cell for each image.</span>
 </pre></div>
 </div>
@@ -580,8 +593,8 @@ title="Print to PDF"
 </section>
 <section id="step-3-create-a-data-loader">
 <h2>Step 3: Create a data loader<a class="headerlink" href="#step-3-create-a-data-loader" title="Permalink to this headline">#</a></h2>
-<p>A data loader is a class that can be used to load batches of data. It is a simple wrapper around a dataset that provides a way to iterate over the dataset, returning a batch of data at each iteration.</p>
-<p>For PyTorch, we strongly recommend using the <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader">torch.utils.data.DataLoader</a> class to load the data. It has a lot of built-in functionalities to handle efficient loading of data that you don’t need to implement from scratch. In our experience, it is rarely needed to implement a custom version of <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>. Getting familar with how to use a PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> is usually enough.</p>
+<p>A data loader is a class that can be used to load batches of data. It provides a way to iterate over the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>, returning a batch of data at each iteration.</p>
+<p>For PyTorch, we strongly recommend using the <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader">torch.utils.data.DataLoader</a> class to load the data. It has a lot of built-in functionalities to handle efficient concurrent loading of data that you don’t need to implement from scratch. In our experience, it is rarely needed to implement a custom version of <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>. Getting familar with how to use a PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> is usually enough.</p>
 <p><strong>Your task</strong>: Fill in the missing code in the next cell, so that it can pass the test that follows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
