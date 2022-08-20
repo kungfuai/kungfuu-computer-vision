@@ -21,7 +21,7 @@ jobs:
       run: |
         pip install -r requirements.txt
     # Build the book
-    - name: Build the website
+    - name: Build the book
       run: bin/build.sh
     # Deploy the book's HTML to gh-pages branch
     - name: GitHub Pages action
