@@ -8,5 +8,8 @@ This is a collection of computer visions courses in KUNGFU.U.
 
 
 ```{raw} html
-<a href="course1-image-classification/index.html">Course 1: Evolve model training recipes for image classification</a>
+<ol>
+    <li><a href="course1-image-classification/index.html">Evolve model training recipes for image classification</a></li>
+    <li><a href="course2-structured-prediction/index.html">Training Computer Vision Models for Structured Prediction</a></li>
+</ol>
 ```
