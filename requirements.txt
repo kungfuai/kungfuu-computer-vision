@@ -1,7 +1,14 @@
-jupyter-book
+jupyter-book==0.13.1
+ipywidgets==7.7.2
+myst-nb==0.13.2
+widgetsnbextension==3.6.1
+linkify-it-py==1.0.2
+kiwisolver==1.4.3
+jsonschema==3.1.0
 matplotlib
 numpy
 pytest
+git+https://github.com/zzsi/jupyter-sphinx
 # /Users/zzsi/projects/zz/quantecon-book-theme
 #git+https://github.com/QuantEcon/quantecon-book-theme.git
 # pydata-sphinx-theme
