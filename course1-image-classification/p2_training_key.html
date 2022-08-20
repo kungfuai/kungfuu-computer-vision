@@ -1,0 +1,1592 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Project 2: A minimal model training experiment &#8212; Evolve model training recipes for image classification</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Evolve model training recipes for image classification</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="p1_dataset.html">
+   Project 1: Preparing an image dataset for model training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="p2_training.html">
+   Project 2: A minimal model training experiment
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/p2_training_key.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fp2_training_key.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/p2_training_key.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-create-a-model-using-lightningmodule">
+   Step 1: Create a model using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     LightningModule
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installation">
+     Installation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-simple-image-classifier-module">
+     A simple image classifier module
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#testing-the-forward-path-of-the-model">
+     Testing the forward path of the model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-is-a-valid-input">
+       What is a valid input?
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-prepare-the-dataset-and-data-loader">
+   Step 2: Prepare the dataset and data loader
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-training-the-model">
+   Step 3: Training the model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss">
+     Loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimizer">
+     Optimizer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-step">
+     Training Step
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metrics">
+     Metrics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-loop">
+     Training loop
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-model-training">
+     Start model training
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-visualize-model-predictions">
+   Step 4: Visualize model predictions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-using-the-trainer-provided-by-pytorch-lightning">
+   Step 5: Using the
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     Trainer
+    </span>
+   </code>
+   provided by Pytorch-Lightning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logging">
+     Logging
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hooks">
+   Hooks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
+   Step 6 (optional): Track the model’s progress using an experiment tracking tool
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Project 2: A minimal model training experiment</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-create-a-model-using-lightningmodule">
+   Step 1: Create a model using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     LightningModule
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installation">
+     Installation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-simple-image-classifier-module">
+     A simple image classifier module
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#testing-the-forward-path-of-the-model">
+     Testing the forward path of the model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-is-a-valid-input">
+       What is a valid input?
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-prepare-the-dataset-and-data-loader">
+   Step 2: Prepare the dataset and data loader
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-training-the-model">
+   Step 3: Training the model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss">
+     Loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimizer">
+     Optimizer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-step">
+     Training Step
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metrics">
+     Metrics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-loop">
+     Training loop
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-model-training">
+     Start model training
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-visualize-model-predictions">
+   Step 4: Visualize model predictions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-using-the-trainer-provided-by-pytorch-lightning">
+   Step 5: Using the
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     Trainer
+    </span>
+   </code>
+   provided by Pytorch-Lightning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logging">
+     Logging
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hooks">
+   Hooks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
+   Step 6 (optional): Track the model’s progress using an experiment tracking tool
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="project-2-a-minimal-model-training-experiment">
+<h1>Project 2: A minimal model training experiment<a class="headerlink" href="#project-2-a-minimal-model-training-experiment" title="Permalink to this headline">#</a></h1>
+<p><strong>Goal</strong>:</p>
+<ul class="simple">
+<li><p>Create a <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">PyTorch LightningModule</a> named <code class="docutils literal notranslate"><span class="pre">ImageClassifier</span></code> that holds a convolutional network with ResNet18 backbone.</p></li>
+<li><p>Learn to adapt the dataset class to be compatible with the model.</p></li>
+<li><p>Understand a minimal set of components of a model training pipeline: loss, optimizer, metrics, training loop.</p></li>
+<li><p>Assemble the components to train a model using the dataset class and the dataloader created in the previous object.</p></li>
+<li><p>Learn how to visualize model predictions.</p></li>
+<li><p>Understand the concept of fine-tuning and the benefits of starting from a pre-trained model. (may move to the next project)</p></li>
+<li><p>Understand the benefits and options of a dataloader. (may move to the next project)</p></li>
+</ul>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul class="simple">
+<li><p>Implement a test that checks a simple ImageClassifier can be predict on an image that has the correct shape.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ImageClassifier</span></code> can be trained on the CIFAR10 dataset, showing decreasing loss and accuracy for several epochs.</p></li>
+</ul>
+<p><strong>Resources</strong>:</p>
+<ul class="simple">
+<li><p>If you want to use docker to run code in this notebook, <code class="docutils literal notranslate"><span class="pre">pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime</span></code> is a good choice.</p></li>
+</ul>
+<section id="step-1-create-a-model-using-lightningmodule">
+<h2>Step 1: Create a model using <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code><a class="headerlink" href="#step-1-create-a-model-using-lightningmodule" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> is a convenient and structured way to implement a PyTorch model, as well as its training and validation behaviors. For more information, please refer to the <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">documentation</a> for <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>.</p>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install the dependencies:</span>
+<span class="o">!</span>pip install torch torchvision pytorch-lightning<span class="o">==</span><span class="m">1</span>.6.4 torchmetrics mlflow
+<span class="c1"># If the above installation fails, try:</span>
+<span class="c1"># !pip install torch==1.12.0 torchvision==0.13.0 pytorch-lightning==1.6.4 torchmetrics mlflow</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Requirement already satisfied: torch in /usr/local/lib/python3.7/dist-packages (1.12.1+cu113)
+Requirement already satisfied: torchvision in /usr/local/lib/python3.7/dist-packages (0.13.1+cu113)
+Collecting pytorch-lightning==1.6.4
+  Downloading pytorch_lightning-1.6.4-py3-none-any.whl (585 kB)
+     |████████████████████████████████| 585 kB 5.0 MB/s 
+?25hCollecting torchmetrics
+  Downloading torchmetrics-0.9.3-py3-none-any.whl (419 kB)
+     |████████████████████████████████| 419 kB 51.5 MB/s 
+?25hCollecting mlflow
+  Downloading mlflow-1.28.0-py3-none-any.whl (17.0 MB)
+     |████████████████████████████████| 17.0 MB 151 kB/s 
+?25hRequirement already satisfied: packaging&gt;=17.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (21.3)
+Requirement already satisfied: fsspec[http]!=2021.06.0,&gt;=2021.05.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (2022.7.1)
+Requirement already satisfied: PyYAML&gt;=5.4 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (6.0)
+Requirement already satisfied: numpy&gt;=1.17.2 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (1.21.6)
+Collecting pyDeprecate&gt;=0.3.1
+  Downloading pyDeprecate-0.3.2-py3-none-any.whl (10 kB)
+Requirement already satisfied: protobuf&lt;=3.20.1 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (3.17.3)
+Requirement already satisfied: tqdm&gt;=4.57.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (4.64.0)
+Requirement already satisfied: tensorboard&gt;=2.2.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (2.8.0)
+Requirement already satisfied: typing-extensions&gt;=4.0.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (4.1.1)
+Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (from fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.23.0)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.7/dist-packages (from fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (3.8.1)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=17.0-&gt;pytorch-lightning==1.6.4) (3.0.9)
+Requirement already satisfied: six&gt;=1.9 in /usr/local/lib/python3.7/dist-packages (from protobuf&lt;=3.20.1-&gt;pytorch-lightning==1.6.4) (1.15.0)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.8.1)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.4.6)
+Requirement already satisfied: absl-py&gt;=0.4 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.2.0)
+Requirement already satisfied: setuptools&gt;=41.0.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (57.4.0)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.6.1)
+Requirement already satisfied: werkzeug&gt;=0.11.15 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.0.1)
+Requirement already satisfied: wheel&gt;=0.26 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.37.1)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.35.0)
+Requirement already satisfied: grpcio&gt;=1.24.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.47.0)
+Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.4.1)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.2.8)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.9)
+Requirement already satisfied: cachetools&lt;5.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.2.4)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.3.1)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.7/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.12.0)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.8.1)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.7/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.4.8)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (3.0.4)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.10)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2022.6.15)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.24.3)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.2.0)
+Requirement already satisfied: pillow!=8.3.*,&gt;=5.3.0 in /usr/local/lib/python3.7/dist-packages (from torchvision) (7.1.2)
+Requirement already satisfied: cloudpickle&lt;3 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.5.0)
+Requirement already satisfied: click&lt;9,&gt;=7.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (7.1.2)
+Requirement already satisfied: sqlalchemy&lt;2,&gt;=1.4.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.4.40)
+Collecting prometheus-flask-exporter&lt;1
+  Downloading prometheus_flask_exporter-0.20.3-py3-none-any.whl (18 kB)
+Requirement already satisfied: Flask&lt;3 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.1.4)
+Collecting databricks-cli&lt;1,&gt;=0.8.7
+  Downloading databricks-cli-0.17.2.tar.gz (81 kB)
+     |████████████████████████████████| 81 kB 12.0 MB/s 
+?25hRequirement already satisfied: pytz&lt;2023 in /usr/local/lib/python3.7/dist-packages (from mlflow) (2022.2.1)
+Collecting alembic&lt;2
+  Downloading alembic-1.8.1-py3-none-any.whl (209 kB)
+     |████████████████████████████████| 209 kB 39.6 MB/s 
+?25hCollecting querystring-parser&lt;2
+  Downloading querystring_parser-1.2.4-py2.py3-none-any.whl (7.9 kB)
+Requirement already satisfied: sqlparse&lt;1,&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.4.2)
+Collecting docker&lt;6,&gt;=4.0.0
+  Downloading docker-5.0.3-py2.py3-none-any.whl (146 kB)
+     |████████████████████████████████| 146 kB 51.4 MB/s 
+?25hCollecting gunicorn&lt;21
+  Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
+     |████████████████████████████████| 79 kB 5.2 MB/s 
+?25hRequirement already satisfied: scipy&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.7.3)
+Requirement already satisfied: entrypoints&lt;1 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.4)
+Collecting gitpython&lt;4,&gt;=2.1.0
+  Downloading GitPython-3.1.27-py3-none-any.whl (181 kB)
+     |████████████████████████████████| 181 kB 59.5 MB/s 
+?25hRequirement already satisfied: pandas&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.3.5)
+Collecting Mako
+  Downloading Mako-1.2.1-py3-none-any.whl (78 kB)
+     |████████████████████████████████| 78 kB 8.9 MB/s 
+?25hRequirement already satisfied: importlib-resources in /usr/local/lib/python3.7/dist-packages (from alembic&lt;2-&gt;mlflow) (5.9.0)
+Collecting pyjwt&gt;=1.7.0
+  Downloading PyJWT-2.4.0-py3-none-any.whl (18 kB)
+Requirement already satisfied: tabulate&gt;=0.7.7 in /usr/local/lib/python3.7/dist-packages (from databricks-cli&lt;1,&gt;=0.8.7-&gt;mlflow) (0.8.10)
+Collecting websocket-client&gt;=0.32.0
+  Downloading websocket_client-1.3.3-py3-none-any.whl (54 kB)
+     |████████████████████████████████| 54 kB 3.4 MB/s 
+?25hRequirement already satisfied: itsdangerous&lt;2.0,&gt;=0.24 in /usr/local/lib/python3.7/dist-packages (from Flask&lt;3-&gt;mlflow) (1.1.0)
+Requirement already satisfied: Jinja2&lt;3.0,&gt;=2.10.1 in /usr/local/lib/python3.7/dist-packages (from Flask&lt;3-&gt;mlflow) (2.11.3)
+Collecting gitdb&lt;5,&gt;=4.0.1
+  Downloading gitdb-4.0.9-py3-none-any.whl (63 kB)
+     |████████████████████████████████| 63 kB 2.2 MB/s 
+?25hCollecting smmap&lt;6,&gt;=3.0.1
+  Downloading smmap-5.0.0-py3-none-any.whl (24 kB)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from Jinja2&lt;3.0,&gt;=2.10.1-&gt;Flask&lt;3-&gt;mlflow) (2.0.1)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&lt;2-&gt;mlflow) (2.8.2)
+Collecting prometheus-client
+  Downloading prometheus_client-0.14.1-py3-none-any.whl (59 kB)
+     |████████████████████████████████| 59 kB 6.2 MB/s 
+?25hRequirement already satisfied: greenlet!=0.4.17 in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&lt;2,&gt;=1.4.0-&gt;mlflow) (1.1.2)
+Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (6.0.2)
+Requirement already satisfied: frozenlist&gt;=1.1.1 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.3.1)
+Requirement already satisfied: async-timeout&lt;5.0,&gt;=4.0.0a3 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (4.0.2)
+Requirement already satisfied: attrs&gt;=17.3.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (22.1.0)
+Requirement already satisfied: charset-normalizer&lt;3.0,&gt;=2.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.1.0)
+Requirement already satisfied: aiosignal&gt;=1.1.2 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.2.0)
+Requirement already satisfied: asynctest==0.13.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (0.13.0)
+Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.8.1)
+Building wheels for collected packages: databricks-cli
+  Building wheel for databricks-cli (setup.py) ... ?25l?25hdone
+  Created wheel for databricks-cli: filename=databricks_cli-0.17.2-py3-none-any.whl size=143915 sha256=604bb70ceaa51671380134fed9a1b6325928d4d912d19322d713514681571f31
+  Stored in directory: /root/.cache/pip/wheels/e4/94/af/ed16e5ddf301a3628d1d3e15ef95bbb79e076a3be48c11699b
+Successfully built databricks-cli
+Installing collected packages: smmap, websocket-client, pyjwt, prometheus-client, Mako, gitdb, torchmetrics, querystring-parser, pyDeprecate, prometheus-flask-exporter, gunicorn, gitpython, docker, databricks-cli, alembic, pytorch-lightning, mlflow
+Successfully installed Mako-1.2.1 alembic-1.8.1 databricks-cli-0.17.2 docker-5.0.3 gitdb-4.0.9 gitpython-3.1.27 gunicorn-20.1.0 mlflow-1.28.0 prometheus-client-0.14.1 prometheus-flask-exporter-0.20.3 pyDeprecate-0.3.2 pyjwt-2.4.0 pytorch-lightning-1.6.4 querystring-parser-1.2.4 smmap-5.0.0 torchmetrics-0.9.3 websocket-client-1.3.3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-simple-image-classifier-module">
+<h3>A simple image classifier module<a class="headerlink" href="#a-simple-image-classifier-module" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">from</span> <span class="nn">torchvision.models</span> <span class="kn">import</span> <span class="n">resnet18</span>
+
+<span class="k">class</span> <span class="nc">ImageClassifier</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">resnet18</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="testing-the-forward-path-of-the-model">
+<h3>Testing the forward path of the model<a class="headerlink" href="#testing-the-forward-path-of-the-model" title="Permalink to this headline">#</a></h3>
+<p>As a trainable function, the model is callable. The model’s forward path (as defined in <code class="docutils literal notranslate"><span class="pre">forward()</span></code>) is the normal execution of the function. We can test this by passing an image to the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="s2">&quot;The model is not a callable object.&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is callable.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model is callable.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="what-is-a-valid-input">
+<h4>What is a valid input?<a class="headerlink" href="#what-is-a-valid-input" title="Permalink to this headline">#</a></h4>
+<p>To test the forward path of the model, we need to pass a valid input. The input should be a tensor of shape <code class="docutils literal notranslate"><span class="pre">(b,</span> <span class="pre">3,</span> <span class="pre">32,</span> <span class="pre">32)</span></code> where <code class="docutils literal notranslate"><span class="pre">b</span></code> is the batch size (an integer).</p>
+<p><strong>Your Task</strong>: Fix the code below to pass the test.</p>
+<p><strong>Tips:</strong> <code class="docutils literal notranslate"><span class="pre">torch.from_numpy()</span></code> can be used to convert a numpy array to a tensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># TODO: The test is broken. Please fix it.</span>
+<span class="k">def</span> <span class="nf">test_model_can_predict_on_a_random_image</span><span class="p">():</span>
+    <span class="c1"># input_image = np.ones(shape=(3, 224, 224), dtype=np.float32)</span>
+    <span class="n">input_image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>  <span class="c1"># run the model on the input image</span>
+    <span class="k">assert</span> <span class="n">output</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># is the output shape correct?</span>
+
+
+<span class="n">test_model_can_predict_on_a_random_image</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test passed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test passed
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="step-2-prepare-the-dataset-and-data-loader">
+<h2>Step 2: Prepare the dataset and data loader<a class="headerlink" href="#step-2-prepare-the-dataset-and-data-loader" title="Permalink to this headline">#</a></h2>
+<p>You have two choices here and either way would work.</p>
+<ol>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">CIFAR10</span></code> dataset class provided by <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>. This is easier.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">CIFAR10</span>
+
+<span class="n">cifar10_train</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">)</span>
+<span class="n">cifar10_val</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Reuse the <code class="docutils literal notranslate"><span class="pre">CustomDataset</span></code> from the previous object.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: import `CIFAR10` or copy over the code from the previous project.</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">CIFAR10</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+
+<span class="n">cifar10_train</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+<span class="n">cifar10_val</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to ./cifar10/cifar-10-python.tar.gz
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e2765dbd144c4282b80dfb1fdb03fd8f", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracting ./cifar10/cifar-10-python.tar.gz to ./cifar10
+Files already downloaded and verified
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-training-the-model">
+<h2>Step 3: Training the model<a class="headerlink" href="#step-3-training-the-model" title="Permalink to this headline">#</a></h2>
+<section id="loss">
+<h3>Loss<a class="headerlink" href="#loss" title="Permalink to this headline">#</a></h3>
+<p>A loss is a function that takes the model’s output (also called predictions) and the ground truth (also called “targets”) as input and returns a scalar value. The loss is used as the feedback mechantism to optimize the model.</p>
+<p>For classification, the loss is typically the cross-entropy. Use <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.cross_entropy</span></code> when the model output are logits or <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.nll_loss</span></code> when the outputs are probabilities (a.k.a. softmax). Loss functions can have requirements on the type (<code class="docutils literal notranslate"><span class="pre">dtype</span></code>) of input. <code class="docutils literal notranslate"><span class="pre">cross_entropy</span></code>, for example, expects targets to be “Long” or <code class="docutils literal notranslate"><span class="pre">np.int64</span></code>.</p>
+<p><strong>Your Task</strong>: The following code almost works but there is a bug related to data type. Please fix it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="c1"># To simplify the code, assume there are 3 image classes.</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="c1"># y_true = torch.from_numpy(np.array([1], dtype=np.float32))</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(5.0134)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Your Task</strong>: Can you make the loss lower? Try changing <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> in the next cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: change y_pred to make the loss lower.</span>
+<span class="c1"># y_pred = torch.from_numpy(np.array([[0, 0, 5]], dtype=np.float32))</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0134)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="optimizer">
+<h3>Optimizer<a class="headerlink" href="#optimizer" title="Permalink to this headline">#</a></h3>
+<p>The gradient over model parameters (a.k.a. model weights) is computed of the loss function, and informs how the model parameters should be updated. The specifics of how the model is updated is handled by an optimizer.</p>
+<p>An optimizer can be created by passing the model parameters (<code class="docutils literal notranslate"><span class="pre">model.parameters()</span></code>) to the optimizer constructor, as well as learning rate, momentum, and other hyper-parameters. Below is a minimal example of using an optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When using <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>, this is taken care of by <code class="docutils literal notranslate"><span class="pre">LightniningModule</span></code> under the hood so you don’t have to write the boilerplate code as below (pseudo-code):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># put model in train mode and enable gradient calculation</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">outs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">)</span>
+    <span class="n">outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+
+    <span class="c1"># clear gradients</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># backward</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># update parameters</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more details, please refer to <a class="reference external" href="https://pytorch.org/docs/stable/optim.html">the documentation for PyTorch optimizers</a> and <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">the documentation for <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code></a>.</p>
+</section>
+<section id="training-step">
+<h3>Training Step<a class="headerlink" href="#training-step" title="Permalink to this headline">#</a></h3>
+<p>We can start specifying the training behavior to the model by adding the <code class="docutils literal notranslate"><span class="pre">training_step</span></code> method in the <code class="docutils literal notranslate"><span class="pre">ImageClassifier</span></code> class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ImageClassifier</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">resnet18</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># </span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Your task</strong>: Implement the following unit test. Use the data loader to get a batch of data.
+Then, call the <code class="docutils literal notranslate"><span class="pre">training_step</span></code> and assert that the return value is a dictionary that looks
+like this: <code class="docutils literal notranslate"><span class="pre">{'loss':</span> <span class="pre">0.5}</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+
+<span class="k">def</span> <span class="nf">test_training_step_works</span><span class="p">():</span>
+    <span class="c1"># TODO: Use the data loader to get a batch of data.</span>
+    <span class="c1">#    Then, call the `training_step` and assert that the return value is a dictionary that looks</span>
+    <span class="c1">#    like this: {&#39;loss&#39;: 0.5}.</span>
+    <span class="c1"># ...</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+    <span class="n">training_step_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">training_step_output</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">training_step_output</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Got type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">training_step_output</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">assert</span> <span class="s2">&quot;loss&quot;</span> <span class="ow">in</span> <span class="n">training_step_output</span>
+
+
+<span class="n">test_training_step_works</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;loss&#39;: tensor(2.6848, grad_fn=&lt;NllLossBackward0&gt;)}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="metrics">
+<h3>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">#</a></h3>
+<p>A metric is a function that takes the model’s output and the ground truth as input and returns a scalar value. The metric is used to evaluate the model’s performance. It is mainly used to monitor the training progress and does not directly influence the model’s training behavior. However, it can influence model selection and early stopping.</p>
+<p>For classification, the metric is typically the accuracy. We will use <code class="docutils literal notranslate"><span class="pre">torchmetrics.Accuracy</span></code> in this project.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Accuracy</span>
+
+<span class="c1"># Again, for simplicity, assume there are only 3 imge classes.</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="c1"># The following line is optional and shouldn&#39;t change the result.</span>
+<span class="c1"># y_pred = F.softmax(y_pred, dim=1)</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">acc</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="o">.</span><span class="n">compute</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: tensor(0.5000)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-loop">
+<h3>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">#</a></h3>
+<p>A training loop manages the training process that iteratively passes batches of training examples to the model and running the training step.</p>
+<p>The training steps are organized into “epochs”, where an epoch can be a single pass through the entire training dataset, or it can be simply a predefined number of training steps. At the end of an epoch, the model is used predict on the validation dataset and calculate accuracy metrics.</p>
+<p>To do this, we need to add <code class="docutils literal notranslate"><span class="pre">validation_step</span></code> and <code class="docutils literal notranslate"><span class="pre">validation_epoch_end</span></code> methods and accuracy metrics to the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Accuracy</span>
+
+
+<span class="k">class</span> <span class="nc">ImageClassifier</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">resnet18</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_accuracy</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># Note: The return value can be None, a loss tensor, or a dictionary with a &quot;loss&quot; key.</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">preds</span><span class="o">=</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">val_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="start-model-training">
+<h3>Start model training<a class="headerlink" href="#start-model-training" title="Permalink to this headline">#</a></h3>
+<p><strong>Your Task</strong>: In the next cells, fill out the details in the training loop implementation. The training loop can be described in pseudo code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">train_step</span> <span class="ow">in</span> <span class="n">train_steps_per_epoch</span><span class="p">:</span>
+        <span class="c1"># TODO: loop over the training dataset and run training steps</span>
+        <span class="k">pass</span>
+    
+    <span class="c1"># TODO: loop over the validation dataset and run validation steps.</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">train_steps_per_epoch</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">val_steps_per_epoch</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">val_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_val</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_infinite_data_iterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+      <span class="k">yield</span> <span class="n">batch</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># The training loop:</span>
+<span class="c1">#</span>
+<span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">):</span>
+    <span class="n">train_data_iterator</span> <span class="o">=</span> <span class="n">get_infinite_data_iterator</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">configure_optimizers</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">train_steps</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">train_steps_per_epoch</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">train_step</span> <span class="ow">in</span> <span class="n">train_steps</span><span class="p">:</span>
+            <span class="c1"># TODO: loop over the training dataset and run training steps</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_data_iterator</span><span class="p">)</span>
+            <span class="n">train_step_loss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="c1"># Back-prop and update model&#39;s weights.</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">train_step_loss</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_step_loss</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+            <span class="n">avg_train_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_losses</span><span class="p">)</span>
+            <span class="n">train_steps</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">avg_train_loss</span><span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">: train loss = </span><span class="si">{</span><span class="n">avg_train_loss</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># TODO: loop over the validation dataset and run validation steps.</span>
+        <span class="c1"># Just using the first few examples from the validation set.</span>
+        <span class="n">val_data_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">val_dataloader</span><span class="p">)</span>
+        <span class="n">val_losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">val_step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">val_steps_per_epoch</span><span class="p">):</span>
+          <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">val_data_iterator</span><span class="p">)</span>
+          <span class="n">val_step_loss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">validation_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">val_step</span><span class="p">)</span>
+          <span class="n">val_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_step_loss</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">avg_val_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">val_losses</span><span class="p">)</span>
+        <span class="n">val_accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">val_accuracy</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">: val loss = </span><span class="si">{</span><span class="n">avg_val_loss</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, accuracy = </span><span class="si">{</span><span class="n">val_accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">model_v1</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+<span class="n">training_loop</span><span class="p">(</span><span class="n">model_v1</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:27&lt;00:00,  3.59it/s, loss=2.1]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 0: train loss = 2.10296
+epoch 0: val loss = 1.92865, accuracy = 0.306
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:27&lt;00:00,  3.59it/s, loss=1.9]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1: train loss = 1.89501
+epoch 1: val loss = 1.94615, accuracy = 0.287
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:26&lt;00:00,  3.71it/s, loss=1.83]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 2: train loss = 1.82609
+epoch 2: val loss = 1.80923, accuracy = 0.321
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:27&lt;00:00,  3.70it/s, loss=1.78]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 3: train loss = 1.77877
+epoch 3: val loss = 1.79830, accuracy = 0.328
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:26&lt;00:00,  3.78it/s, loss=1.74]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 4: train loss = 1.73864
+epoch 4: val loss = 1.70283, accuracy = 0.339
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 100/100 [00:27&lt;00:00,  3.70it/s, loss=1.7]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 5: train loss = 1.69750
+epoch 5: val loss = 1.62756, accuracy = 0.351
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-visualize-model-predictions">
+<h2>Step 4: Visualize model predictions<a class="headerlink" href="#step-4-visualize-model-predictions" title="Permalink to this headline">#</a></h2>
+<p>Having loss going down and accuracy going up is nice. But to have the peace of mind that the model is working and is indeed better, it is helpful to visualize the model’s predictions.</p>
+<p><strong>Your Task</strong>: Complete the following cells to visualize the model’s predictions.</p>
+<p>First, visualize predictions from a randomly initialized model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: call the un-trained model to predict on a few images from the validation set.</span>
+<span class="c1">#   Use the skill learned in project 1 to display a batch of images.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+
+<span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="n">nrows</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">+</span> <span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">ncols</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ncols</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nrows</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;#04253a&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="c1"># fig.set_facecolor(&quot;#e1ddbf&quot;)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="k">def</span> <span class="nf">predict_and_show</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">val_dataloader</span><span class="p">))</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">batch</span>
+    <span class="n">softmax</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">softmax</span> <span class="o">=</span> <span class="n">softmax</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">predicted_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">softmax</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">CLASSES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;airplane&quot;</span><span class="p">,</span> <span class="s2">&quot;automobile&quot;</span><span class="p">,</span> <span class="s2">&quot;bird&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;deer&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;frog&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;horse&quot;</span><span class="p">,</span> <span class="s2">&quot;ship&quot;</span><span class="p">,</span> <span class="s2">&quot;truck&quot;</span><span class="p">]</span>
+    <span class="n">predicted_label_texts</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CLASSES</span><span class="p">[</span><span class="n">pred</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">CLASSES</span><span class="p">[</span><span class="n">correct</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">for</span> <span class="n">pred</span><span class="p">,</span> <span class="n">correct</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">predicted_labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">)]</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">show_images</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">predicted_label_texts</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output_path</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+
+<span class="n">randomly_initialized_model</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+<span class="n">predict_and_show</span><span class="p">(</span><span class="n">randomly_initialized_model</span><span class="p">,</span> <span class="s2">&quot;random_model.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/p2_training_key_31_0.png" src="_images/p2_training_key_31_0.png" />
+</div>
+</div>
+<p>Next, take the trained model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: call the trained model to predict on a few images from the validation set.</span>
+<span class="c1">#   Do predictions look better than the untrained, randomly initialized model?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predict_and_show</span><span class="p">(</span><span class="n">model_v1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/p2_training_key_34_0.png" src="_images/p2_training_key_34_0.png" />
+</div>
+</div>
+</section>
+<section id="step-5-using-the-trainer-provided-by-pytorch-lightning">
+<h2>Step 5: Using the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> provided by Pytorch-Lightning<a class="headerlink" href="#step-5-using-the-trainer-provided-by-pytorch-lightning" title="Permalink to this headline">#</a></h2>
+<p>For commonly used computer vision models, it is often enough to the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> provided by Pytorch-Lightning to handle the training loop. This way, you can run model training with just a couple lines of code.</p>
+<section id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="hooks">
+<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+
+<span class="k">class</span> <span class="nc">ImageClassifierCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_prediction_examples</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">current_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">save_prediction_examples</span> <span class="o">=</span> <span class="n">save_prediction_examples</span>
+    
+    <span class="k">def</span> <span class="nf">on_train_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_train_batch_end</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">on_step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">on_validation_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_validation_batch_end</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">on_step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;acc&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">pl_module</span><span class="o">.</span><span class="n">val_accuracy</span><span class="o">.</span><span class="n">compute</span><span class="p">(),</span> <span class="n">on_step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+      
+    <span class="k">def</span> <span class="nf">_log_prediction_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
+        <span class="n">figure_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_epoch</span><span class="si">:</span><span class="s2">05d</span><span class="si">}</span><span class="s2">.png&quot;</span>
+        <span class="c1"># Warning: `predict_and_show` comes with val_dataloader. It works in this</span>
+        <span class="c1">#   notebook. If you want to use it elsewhere, make sure to pass in your</span>
+        <span class="c1">#   own dataloader.</span>
+        <span class="n">predict_and_show</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">figure_path</span><span class="p">)</span>
+        <span class="n">experiment_tracker</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">experiment</span>
+        <span class="n">experiment_tracker</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="n">figure_path</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">on_validation_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_validation_epoch_end</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">avg_acc</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">val_accuracy</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;val_acc&#39;</span><span class="p">,</span> <span class="n">avg_acc</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;val_accuracy:&quot;</span><span class="p">,</span> <span class="n">avg_acc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_prediction_examples</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_prediction_examples</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_epoch</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">seed_everything</span>
+
+<span class="c1"># Optional: freeze the random seed.</span>
+<span class="n">seed_everything</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">deterministic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limit_train_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">limit_val_batches</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">ImageClassifierCallback</span><span class="p">()])</span>
+<span class="n">model_v2</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model_v2</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:pytorch_lightning.utilities.seed:Global seed set to 42
+INFO:pytorch_lightning.utilities.rank_zero:GPU available: True, used: False
+INFO:pytorch_lightning.utilities.rank_zero:TPU available: False, using: 0 TPU cores
+INFO:pytorch_lightning.utilities.rank_zero:IPU available: False, using: 0 IPUs
+INFO:pytorch_lightning.utilities.rank_zero:HPU available: False, using: 0 HPUs
+/usr/local/lib/python3.7/dist-packages/pytorch_lightning/trainer/trainer.py:1817: PossibleUserWarning: GPU available but not used. Set `accelerator` and `devices` using `Trainer(accelerator=&#39;gpu&#39;, devices=1)`.
+  category=PossibleUserWarning,
+WARNING:pytorch_lightning.loggers.tensorboard:Missing logger folder: /content/lightning_logs
+INFO:pytorch_lightning.callbacks.model_summary:
+  | Name         | Type     | Params
+------------------------------------------
+0 | net          | ResNet   | 11.2 M
+1 | val_accuracy | Accuracy | 0     
+------------------------------------------
+11.2 M    Trainable params
+0         Non-trainable params
+11.2 M    Total params
+44.727    Total estimated model params size (MB)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a4095451298c4aeab7d031486c851224", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.0625)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "34a1f457f5cc4acca44696aac6235c22", "version_major": 2, "version_minor": 0}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "109a21062f4d4607a5479d0964fb8218", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.2552)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "09696c2ada7148c19a248856c4aff5ef", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.2955)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0aef7317c86b48739faff3dd2e5e89d8", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3066)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8f0b0fb599344037b3b089dbb8238a45", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3006)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "c609af758c5b44d981cafc8e6262dd96", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3065)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predict_and_show</span><span class="p">(</span><span class="n">model_v2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/p2_training_key_38_0.png" src="_images/p2_training_key_38_0.png" />
+</div>
+</div>
+</section>
+<section id="step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
+<h2>Step 6 (optional): Track the model’s progress using an experiment tracking tool<a class="headerlink" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool" title="Permalink to this headline">#</a></h2>
+<p>Tracking model’s quality during training is made easy by great experiment tracking tools like <code class="docutils literal notranslate"><span class="pre">mlflow</span></code>. With a small change to your training code, we will walk through how to use it to track your model’s progress in learning.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">MLFlowLogger</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">limit_train_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">limit_val_batches</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">MLFlowLogger</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;image classifier&quot;</span><span class="p">,</span> <span class="n">tracking_uri</span><span class="o">=</span><span class="s2">&quot;./mlruns&quot;</span><span class="p">),</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">ImageClassifierCallback</span><span class="p">(</span><span class="n">save_prediction_examples</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">model_v3</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model_v3</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:pytorch_lightning.utilities.rank_zero:GPU available: True, used: False
+INFO:pytorch_lightning.utilities.rank_zero:TPU available: False, using: 0 TPU cores
+INFO:pytorch_lightning.utilities.rank_zero:IPU available: False, using: 0 IPUs
+INFO:pytorch_lightning.utilities.rank_zero:HPU available: False, using: 0 HPUs
+/usr/local/lib/python3.7/dist-packages/pytorch_lightning/trainer/trainer.py:1817: PossibleUserWarning: GPU available but not used. Set `accelerator` and `devices` using `Trainer(accelerator=&#39;gpu&#39;, devices=1)`.
+  category=PossibleUserWarning,
+WARNING:pytorch_lightning.loggers.mlflow:Experiment with name image classifier not found. Creating it.
+INFO:pytorch_lightning.callbacks.model_summary:
+  | Name         | Type     | Params
+------------------------------------------
+0 | net          | ResNet   | 11.2 M
+1 | val_accuracy | Accuracy | 0     
+------------------------------------------
+11.2 M    Trainable params
+0         Non-trainable params
+11.2 M    Total params
+44.727    Total estimated model params size (MB)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6a5ec19bb2c5408cb4eaddcadfbc5741", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.0938)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0f706a7745b34f2db8bf97e0ed09b498", "version_major": 2, "version_minor": 0}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7d9c5d78edfe4f13beb37b282966fe7d", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.2865)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7a5b4748065d465e9e1e0eb882da3c5b", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.2955)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "09188e4fc9f649a8b77b32e6b7b36a78", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3008)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "90106f75ce584770801937418bbc58f2", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3125)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "3eb1e97e82834d2bacdfc2753bc80b92", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val_accuracy: tensor(0.3209)
+</pre></div>
+</div>
+<img alt="_images/p2_training_key_40_14.png" src="_images/p2_training_key_40_14.png" />
+<img alt="_images/p2_training_key_40_15.png" src="_images/p2_training_key_40_15.png" />
+<img alt="_images/p2_training_key_40_16.png" src="_images/p2_training_key_40_16.png" />
+<img alt="_images/p2_training_key_40_17.png" src="_images/p2_training_key_40_17.png" />
+<img alt="_images/p2_training_key_40_18.png" src="_images/p2_training_key_40_18.png" />
+<img alt="_images/p2_training_key_40_19.png" src="_images/p2_training_key_40_19.png" />
+</div>
+</div>
+<p>The tracking information is already saved by MLFlow. If you are running this on a local computer, you can type:</p>
+<p><code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">ui</span></code></p>
+<p>and view the MLFlow GUI in your browser.</p>
+<p>If you are running this in colab or on a remote server, you can use the following code to visualize metrics and artifacts within this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">MlflowClient</span><span class="p">(</span><span class="n">tracking_uri</span><span class="o">=</span><span class="s2">&quot;./mlruns&quot;</span><span class="p">)</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_experiment_by_name</span><span class="p">(</span><span class="s2">&quot;image classifier&quot;</span><span class="p">)</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_run_infos</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tag.start_time DESC&quot;</span><span class="p">])</span>
+<span class="n">latest_run</span> <span class="o">=</span> <span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">latest_run</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;RunInfo: artifact_uri=&#39;./mlruns/1/8dda7716d8324c25afe9881073256aa6/artifacts&#39;, end_time=1660943827410, experiment_id=&#39;1&#39;, lifecycle_stage=&#39;active&#39;, run_id=&#39;8dda7716d8324c25afe9881073256aa6&#39;, run_uuid=&#39;8dda7716d8324c25afe9881073256aa6&#39;, start_time=1660943684990, status=&#39;FINISHED&#39;, user_id=&#39;root&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">val_acc_history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_metric_history</span><span class="p">(</span><span class="n">latest_run</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;val_acc&quot;</span><span class="p">)</span>
+<span class="n">val_acc_history</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Metric: key=&#39;val_acc&#39;, step=99, timestamp=1660943714450, value=0.2864583432674408&gt;,
+ &lt;Metric: key=&#39;val_acc&#39;, step=199, timestamp=1660943742018, value=0.2954545319080353&gt;,
+ &lt;Metric: key=&#39;val_acc&#39;, step=299, timestamp=1660943770227, value=0.30078125&gt;,
+ &lt;Metric: key=&#39;val_acc&#39;, step=399, timestamp=1660943798054, value=0.3125&gt;,
+ &lt;Metric: key=&#39;val_acc&#39;, step=499, timestamp=1660943826942, value=0.3209134638309479&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span>
+
+<span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">step</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">val_acc_history</span><span class="p">]</span>
+<span class="n">val_acc</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">val_acc_history</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;val accuracy&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/seaborn/_decorators.py:43: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  FutureWarning
+</pre></div>
+</div>
+<img alt="_images/p2_training_key_44_1.png" src="_images/p2_training_key_44_1.png" />
+</div>
+</div>
+<p>The image artifacts that contain prediction examples can also be retrieved and downloaded. Here we don’t visualize them again because the images probably already show up in the cell above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">latest_run</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;FileInfo: file_size=234054, is_dir=False, path=&#39;00000.png&#39;&gt;,
+ &lt;FileInfo: file_size=237458, is_dir=False, path=&#39;00001.png&#39;&gt;,
+ &lt;FileInfo: file_size=237111, is_dir=False, path=&#39;00002.png&#39;&gt;,
+ &lt;FileInfo: file_size=237357, is_dir=False, path=&#39;00003.png&#39;&gt;,
+ &lt;FileInfo: file_size=236952, is_dir=False, path=&#39;00004.png&#39;&gt;,
+ &lt;FileInfo: file_size=237553, is_dir=False, path=&#39;00005.png&#39;&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By KUNGFU.AI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
