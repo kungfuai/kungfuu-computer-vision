@@ -604,89 +604,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
-Requirement already satisfied: torch in /usr/local/lib/python3.7/dist-packages (1.12.1+cu113)
-Requirement already satisfied: torchvision in /usr/local/lib/python3.7/dist-packages (0.13.1+cu113)
-Requirement already satisfied: pytorch-lightning==1.6.4 in /usr/local/lib/python3.7/dist-packages (1.6.4)
-Requirement already satisfied: torchmetrics in /usr/local/lib/python3.7/dist-packages (0.9.3)
-Requirement already satisfied: mlflow in /usr/local/lib/python3.7/dist-packages (1.28.0)
-Requirement already satisfied: fsspec[http]!=2021.06.0,&gt;=2021.05.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (2022.7.1)
-Requirement already satisfied: PyYAML&gt;=5.4 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (6.0)
-Requirement already satisfied: tensorboard&gt;=2.2.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (2.9.1)
-Requirement already satisfied: protobuf&lt;=3.20.1 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (3.17.3)
-Requirement already satisfied: pyDeprecate&gt;=0.3.1 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (0.3.2)
-Requirement already satisfied: typing-extensions&gt;=4.0.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (4.1.1)
-Requirement already satisfied: packaging&gt;=17.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (21.3)
-Requirement already satisfied: tqdm&gt;=4.57.0 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (4.64.0)
-Requirement already satisfied: numpy&gt;=1.17.2 in /usr/local/lib/python3.7/dist-packages (from pytorch-lightning==1.6.4) (1.21.6)
-Requirement already satisfied: aiohttp in /usr/local/lib/python3.7/dist-packages (from fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (3.8.1)
-Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (from fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.23.0)
-Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=17.0-&gt;pytorch-lightning==1.6.4) (3.0.9)
-Requirement already satisfied: six&gt;=1.9 in /usr/local/lib/python3.7/dist-packages (from protobuf&lt;=3.20.1-&gt;pytorch-lightning==1.6.4) (1.15.0)
-Requirement already satisfied: setuptools&gt;=41.0.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (57.4.0)
-Requirement already satisfied: werkzeug&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.0.1)
-Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.8.1)
-Requirement already satisfied: absl-py&gt;=0.4 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.2.0)
-Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.4.6)
-Requirement already satisfied: wheel&gt;=0.26 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.37.1)
-Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.6.1)
-Requirement already satisfied: grpcio&gt;=1.24.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.47.0)
-Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.35.0)
-Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.4.1)
-Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.2.8)
-Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.9)
-Requirement already satisfied: cachetools&lt;5.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.2.4)
-Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (1.3.1)
-Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.7/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (4.12.0)
-Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.8.1)
-Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.7/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (0.4.8)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.24.3)
-Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (3.0.4)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2022.6.15)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.10)
-Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.2.0-&gt;pytorch-lightning==1.6.4) (3.2.0)
-Requirement already satisfied: pillow!=8.3.*,&gt;=5.3.0 in /usr/local/lib/python3.7/dist-packages (from torchvision) (7.1.2)
-Requirement already satisfied: pytz&lt;2023 in /usr/local/lib/python3.7/dist-packages (from mlflow) (2022.2)
-Requirement already satisfied: alembic&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.8.1)
-Requirement already satisfied: click&lt;9,&gt;=7.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (7.1.2)
-Requirement already satisfied: gitpython&lt;4,&gt;=2.1.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (3.1.27)
-Requirement already satisfied: databricks-cli&lt;1,&gt;=0.8.7 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.17.1)
-Requirement already satisfied: scipy&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.7.3)
-Requirement already satisfied: querystring-parser&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.2.4)
-Requirement already satisfied: cloudpickle&lt;3 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.3.0)
-Requirement already satisfied: prometheus-flask-exporter&lt;1 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.20.3)
-Requirement already satisfied: sqlparse&lt;1,&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.4.2)
-Requirement already satisfied: pandas&lt;2 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.3.5)
-Requirement already satisfied: sqlalchemy&lt;2,&gt;=1.4.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.4.40)
-Requirement already satisfied: entrypoints&lt;1 in /usr/local/lib/python3.7/dist-packages (from mlflow) (0.4)
-Requirement already satisfied: docker&lt;6,&gt;=4.0.0 in /usr/local/lib/python3.7/dist-packages (from mlflow) (5.0.3)
-Requirement already satisfied: gunicorn&lt;21 in /usr/local/lib/python3.7/dist-packages (from mlflow) (20.1.0)
-Requirement already satisfied: Flask&lt;3 in /usr/local/lib/python3.7/dist-packages (from mlflow) (1.1.4)
-Requirement already satisfied: importlib-resources in /usr/local/lib/python3.7/dist-packages (from alembic&lt;2-&gt;mlflow) (5.9.0)
-Requirement already satisfied: Mako in /usr/local/lib/python3.7/dist-packages (from alembic&lt;2-&gt;mlflow) (1.2.1)
-Requirement already satisfied: tabulate&gt;=0.7.7 in /usr/local/lib/python3.7/dist-packages (from databricks-cli&lt;1,&gt;=0.8.7-&gt;mlflow) (0.8.10)
-Requirement already satisfied: pyjwt&gt;=1.7.0 in /usr/local/lib/python3.7/dist-packages (from databricks-cli&lt;1,&gt;=0.8.7-&gt;mlflow) (2.4.0)
-Requirement already satisfied: websocket-client&gt;=0.32.0 in /usr/local/lib/python3.7/dist-packages (from docker&lt;6,&gt;=4.0.0-&gt;mlflow) (1.3.3)
-Requirement already satisfied: Jinja2&lt;3.0,&gt;=2.10.1 in /usr/local/lib/python3.7/dist-packages (from Flask&lt;3-&gt;mlflow) (2.11.3)
-Requirement already satisfied: itsdangerous&lt;2.0,&gt;=0.24 in /usr/local/lib/python3.7/dist-packages (from Flask&lt;3-&gt;mlflow) (1.1.0)
-Requirement already satisfied: gitdb&lt;5,&gt;=4.0.1 in /usr/local/lib/python3.7/dist-packages (from gitpython&lt;4,&gt;=2.1.0-&gt;mlflow) (4.0.9)
-Requirement already satisfied: smmap&lt;6,&gt;=3.0.1 in /usr/local/lib/python3.7/dist-packages (from gitdb&lt;5,&gt;=4.0.1-&gt;gitpython&lt;4,&gt;=2.1.0-&gt;mlflow) (5.0.0)
-Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from Jinja2&lt;3.0,&gt;=2.10.1-&gt;Flask&lt;3-&gt;mlflow) (2.0.1)
-Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&lt;2-&gt;mlflow) (2.8.2)
-Requirement already satisfied: prometheus-client in /usr/local/lib/python3.7/dist-packages (from prometheus-flask-exporter&lt;1-&gt;mlflow) (0.14.1)
-Requirement already satisfied: greenlet!=0.4.17 in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&lt;2,&gt;=1.4.0-&gt;mlflow) (1.1.2)
-Requirement already satisfied: async-timeout&lt;5.0,&gt;=4.0.0a3 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (4.0.2)
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (6.0.2)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.8.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (22.1.0)
-Requirement already satisfied: aiosignal&gt;=1.1.2 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.2.0)
-Requirement already satisfied: asynctest==0.13.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (0.13.0)
-Requirement already satisfied: charset-normalizer&lt;3.0,&gt;=2.0 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (2.1.0)
-Requirement already satisfied: frozenlist&gt;=1.1.1 in /usr/local/lib/python3.7/dist-packages (from aiohttp-&gt;fsspec[http]!=2021.06.0,&gt;=2021.05.0-&gt;pytorch-lightning==1.6.4) (1.3.1)
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="a-simple-image-classifier-module">
@@ -725,11 +642,6 @@ Requirement already satisfied: frozenlist&gt;=1.1.1 in /usr/local/lib/python3.7/
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model is callable.
-</pre></div>
-</div>
-</div>
 </div>
 <section id="what-is-a-valid-input">
 <h4>What is a valid input?<a class="headerlink" href="#what-is-a-valid-input" title="Permalink to this headline">#</a></h4>
@@ -751,11 +663,6 @@ Requirement already satisfied: frozenlist&gt;=1.1.1 in /usr/local/lib/python3.7/
 
 <span class="n">test_model_can_predict_on_a_random_image</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test passed&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test passed
 </pre></div>
 </div>
 </div>
