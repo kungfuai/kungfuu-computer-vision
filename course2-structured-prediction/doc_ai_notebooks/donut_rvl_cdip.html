@@ -1,0 +1,1383 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Set-up environment &#8212; Training Computer Vision Models for Structured Prediction</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Document AI: Understanding Photos of Documents" href="../doc_ai.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Training Computer Vision Models for Structured Prediction</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../doc_ai.html">
+   Document AI: Understanding Photos of Documents
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Set-up environment
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course2-structured-prediction/doc_ai_notebooks/donut_rvl_cdip.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fdoc_ai_notebooks/donut_rvl_cdip.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/doc_ai_notebooks/donut_rvl_cdip.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Set-up environment
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-dataset">
+   Load dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-model-and-processor">
+   Load model and processor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-dataset">
+   Prepare dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-pytorch-dataloader">
+   Create PyTorch DataLoader
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#train-model">
+   Train model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluate">
+   Evaluate
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Set-up environment</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Set-up environment
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-dataset">
+   Load dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-model-and-processor">
+   Load model and processor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-dataset">
+   Prepare dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-pytorch-dataloader">
+   Create PyTorch DataLoader
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#train-model">
+   Train model
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluate">
+   Evaluate
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="set-up-environment">
+<h1>Set-up environment<a class="headerlink" href="#set-up-environment" title="Permalink to this headline">#</a></h1>
+<p>Adapted from this <a class="reference external" href="https://colab.research.google.com/github/NielsRogge/Transformers-Tutorials/blob/master/Donut/RVL-CDIP/Fine_tune_Donut_on_toy_RVL_CDIP_(document_image_classification).ipynb">notebook</a></p>
+<p>First, let’s install the relevant libraries: 🤗 Transformers &amp; Datasets, and Sentencepiece (the latter is used for tokenization).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install -q git+https://github.com/huggingface/transformers.git
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Installing build dependencies ... ?25l?25hdone
+  Getting requirements to build wheel ... ?25l?25hdone
+    Preparing wheel metadata ... ?25l?25hdone
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install -q datasets sentencepiece torchmetrics
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-dataset">
+<h1>Load dataset<a class="headerlink" href="#load-dataset" title="Permalink to this headline">#</a></h1>
+<p>Next, let’s load a dataset from the hub. I’ve prepared a toy dataset which is a small subset of <a class="reference external" href="https://paperswithcode.com/dataset/rvl-cdip">RVL-CDIP</a>, consisting of (image, text) pairs. The text is what the model should learn to generate given the visual input.</p>
+<p>Here, it’s important to understand how targets should be prepared for Donut: you need to create a string called “ground_truth” (or “ground_truths”, in case there are multiple possible ground truth target sequences, see DocVQA). This is a string format of a dictionary (JSON dumped), containing either a <code class="docutils literal notranslate"><span class="pre">gt_parse</span></code> or <code class="docutils literal notranslate"><span class="pre">gt_parses</span></code> key.</p>
+<p>For document image classification, the <code class="docutils literal notranslate"><span class="pre">gt_parse</span></code> follows the format of <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">{class_name}}</span></code>, for example, <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">&quot;scientific_report&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">&quot;presentation&quot;}</span></code>.</p>
+<p>The notebook for creating a 🤗 Dataset (custom data) for Donut can be found in my Github repo <a class="reference external" href="https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Donut/RVL-CDIP/Preparing_an_image_classification_dataset_for_Donut.ipynb">here</a>.</p>
+<p>Let’s load the dataset first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;nielsr/rvl_cdip_10_examples_per_class_donut&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:datasets.builder:Using custom data configuration nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af
+WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datasets/nielsr___parquet/nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af/0.0.0/2a3b91fbd88a2c90d1dbbb32b460cf621d31bd5b05b934492fdef7d8d6f236ec)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e48644746bc443729c2bdd3e6d5fc7d3", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">id2label</span> <span class="o">=</span> <span class="p">{</span><span class="nb">id</span><span class="p">:</span> <span class="n">label</span> <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">names</span><span class="p">)}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">id2label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: &#39;letter&#39;, 1: &#39;form&#39;, 2: &#39;email&#39;, 3: &#39;handwritten&#39;, 4: &#39;advertisement&#39;, 5: &#39;scientific report&#39;, 6: &#39;scientific publication&#39;, 7: &#39;specification&#39;, 8: &#39;file folder&#39;, 9: &#39;news article&#39;, 10: &#39;budget&#39;, 11: &#39;invoice&#39;, 12: &#39;presentation&#39;, 13: &#39;questionnaire&#39;, 14: &#39;resume&#39;, 15: &#39;memo&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check out an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;image&#39;: &lt;PIL.TiffImagePlugin.TiffImageFile image mode=L size=762x1000 at 0x7F607EA58B90&gt;,
+ &#39;label&#39;: 0,
+ &#39;ground_truth&#39;: &#39;{&quot;gt_parse&quot;: {&quot;class&quot; : &quot;letter&quot;}}&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen, we prepared the “ground_truth” key, which is a string-formatted dictionary containing a single <code class="docutils literal notranslate"><span class="pre">gt_parse</span></code> key.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">example</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{&quot;gt_parse&quot;: {&quot;class&quot; : &quot;letter&quot;}}&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>One can use Python’s <code class="docutils literal notranslate"><span class="pre">ast.literal_eval</span></code> function to turn the string into a Python dictionary. This helps verifying we have created the gt_parse string in the correct way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
+
+<span class="n">literal_eval</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">])[</span><span class="s1">&#39;gt_parse&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;class&#39;: &#39;letter&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-model-and-processor">
+<h1>Load model and processor<a class="headerlink" href="#load-model-and-processor" title="Permalink to this headline">#</a></h1>
+<p>Next, we’ll load the model itself (Donut is an instance of the <a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/vision-encoder-decoder">VisionEncoderDecoderModel</a> class), as well as its processor (<code class="docutils literal notranslate"><span class="pre">DonutProcessor</span></code>), which can be used to prepare data for the model.</p>
+<p>We’ll update some things; namely the max sequence length of the decoder, as well as the size of the images. Note that this impacts the amount of memory used when fine-tuning the model.</p>
+<p>Note that the exact hyperparameters can be found here: <a class="reference external" href="https://github.com/clovaai/donut/blob/master/config/train_rvlcdip.yaml">https://github.com/clovaai/donut/blob/master/config/train_rvlcdip.yaml</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">VisionEncoderDecoderConfig</span>
+
+<span class="n">max_length</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2560</span><span class="p">,</span> <span class="mi">1920</span><span class="p">]</span>  <span class="c1"># acc = 0.525</span>
+<span class="c1"># let&#39;s use a smaller image size (height, width) because otherwise OOM</span>
+<span class="c1"># the higher the resolution, the better the results will be</span>
+<span class="c1"># so if you have a big GPU, feel free to increase</span>
+<span class="c1"># image_size = [1280, 960]  # acc = 0.45</span>
+<span class="c1"># image_size = [1600, 1280]   # acc = 0.5</span>
+
+<span class="c1"># update image_size of the encoder</span>
+<span class="c1"># during pre-training, a larger image size was used</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">VisionEncoderDecoderConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;nielsr/donut-base&quot;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="c1"># (height, width)</span>
+<span class="c1"># update max_length of the decoder (for generation)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">max_length</span>
+<span class="c1"># TODO we should actually update max_position_embeddings and interpolate the pre-trained ones:</span>
+<span class="c1"># https://github.com/clovaai/donut/blob/0acc65a85d140852b8d9928565f0f6b2d98dc088/donut/model.py#L602</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DonutProcessor</span><span class="p">,</span> <span class="n">VisionEncoderDecoderModel</span><span class="p">,</span> <span class="n">BartConfig</span>
+
+<span class="n">processor</span> <span class="o">=</span> <span class="n">DonutProcessor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;nielsr/donut-base&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">VisionEncoderDecoderModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;nielsr/donut-base&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/torch/functional.py:478: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2894.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># we update some settings which differ from pretraining; namely the size of the images + no rotation required</span>
+<span class="c1"># source: https://github.com/clovaai/donut/blob/master/config/train_cord.yaml</span>
+<span class="n">processor</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">image_size</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># should be (width, height)</span>
+<span class="n">processor</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">do_align_long_axis</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="prepare-dataset">
+<h1>Prepare dataset<a class="headerlink" href="#prepare-dataset" title="Permalink to this headline">#</a></h1>
+<p>The first thing we’ll do is add the class names as added tokens to the vocabulary of the decoder of Donut, and the corresponding tokenizer.</p>
+<p>This will result in a slight increase in performance, as otherwise a class might be split up into multiple subword tokens (e.g. the class “advertisement” might be split up into “adv”, “ertisement”). It is beneficial to let the model just learn a single embedding vector for the token “advertisement”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>57525
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">add_tokens</span><span class="p">(</span><span class="n">list_of_tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add tokens to tokenizer and resize the token embeddings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">newly_added_num</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">add_tokens</span><span class="p">(</span><span class="n">list_of_tokens</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">newly_added_num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">resize_token_embeddings</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">additional_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;advertisement/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;budget/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;email/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;file_folder/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;form/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;handwritten/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;invoice/&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;&lt;letter/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;memo/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;news_article/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;presentation/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;questionnaire/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;resume/&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;&lt;scientific_publication/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;scientific_report/&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;specification/&gt;&quot;</span><span class="p">]</span>
+
+<span class="n">add_tokens</span><span class="p">(</span><span class="n">additional_tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">([</span><span class="s2">&quot;&lt;file_folder/&gt;&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[57528]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>57541
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we create a regular PyTorch Dataset. The class below returns <code class="docutils literal notranslate"><span class="pre">(pixel_values,</span> <span class="pre">labels)</span></code> pairs for each item of the dataset.</p>
+<p>It’s all we need for training the model!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="k">class</span> <span class="nc">DonutDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DonutDataset which is saved in huggingface datasets format. (see details in https://huggingface.co/docs/datasets)</span>
+<span class="sd">    Each row, consists of image path(png/jpg/jpeg) and gt data (json/jsonl/txt),</span>
+<span class="sd">    and it will be converted into input_tensor(vectorized image) and input_ids(tokenized string).</span>
+<span class="sd">    Args:</span>
+<span class="sd">        dataset_name_or_path: name of dataset (available at huggingface.co/datasets) or the path containing image files and metadata.jsonl</span>
+<span class="sd">        max_length: the max number of tokens for the target sequences</span>
+<span class="sd">        split: whether to load &quot;train&quot;, &quot;validation&quot; or &quot;test&quot; split</span>
+<span class="sd">        ignore_id: ignore_index for torch.nn.CrossEntropyLoss</span>
+<span class="sd">        task_start_token: the special token to be fed to the decoder to conduct the target task</span>
+<span class="sd">        prompt_end_token: the special token at the end of the sequences</span>
+<span class="sd">        sort_json_key: whether or not to sort the JSON keys</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset_name_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span>
+        <span class="n">ignore_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">task_start_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&lt;s&gt;&quot;</span><span class="p">,</span>
+        <span class="n">prompt_end_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sort_json_key</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">max_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span> <span class="o">=</span> <span class="n">ignore_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_start_token</span> <span class="o">=</span> <span class="n">task_start_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt_end_token</span> <span class="o">=</span> <span class="n">prompt_end_token</span> <span class="k">if</span> <span class="n">prompt_end_token</span> <span class="k">else</span> <span class="n">task_start_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_json_key</span> <span class="o">=</span> <span class="n">sort_json_key</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_name_or_path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gt_token_sequences</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
+            <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;gt_parses&quot;</span> <span class="ow">in</span> <span class="n">ground_truth</span><span class="p">:</span>  <span class="c1"># when multiple ground truths are available, e.g., docvqa</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">[</span><span class="s2">&quot;gt_parses&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="n">gt_jsons</span> <span class="o">=</span> <span class="n">ground_truth</span><span class="p">[</span><span class="s2">&quot;gt_parses&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="s2">&quot;gt_parse&quot;</span> <span class="ow">in</span> <span class="n">ground_truth</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">[</span><span class="s2">&quot;gt_parse&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span>
+                <span class="n">gt_jsons</span> <span class="o">=</span> <span class="p">[</span><span class="n">ground_truth</span><span class="p">[</span><span class="s2">&quot;gt_parse&quot;</span><span class="p">]]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">gt_token_sequences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">json2token</span><span class="p">(</span>
+                        <span class="n">gt_json</span><span class="p">,</span>
+                        <span class="n">update_special_tokens_for_json_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span>
+                        <span class="n">sort_json_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_json_key</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="o">+</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span>
+                    <span class="k">for</span> <span class="n">gt_json</span> <span class="ow">in</span> <span class="n">gt_jsons</span>  <span class="c1"># load json from list of json</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_tokens</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">task_start_token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_end_token</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt_end_token_id</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_end_token</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">json2token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">update_special_tokens_for_json_key</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">sort_json_key</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert an ordered JSON object into a token sequence</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="s2">&quot;text_sequence&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;text_sequence&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">if</span> <span class="n">sort_json_key</span><span class="p">:</span>
+                    <span class="n">keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">keys</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">update_special_tokens_for_json_key</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_tokens</span><span class="p">([</span><span class="sa">fr</span><span class="s2">&quot;&lt;s_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="sa">fr</span><span class="s2">&quot;&lt;/s_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">])</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="p">(</span>
+                        <span class="sa">fr</span><span class="s2">&quot;&lt;s_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+                        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">json2token</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">update_special_tokens_for_json_key</span><span class="p">,</span> <span class="n">sort_json_key</span><span class="p">)</span>
+                        <span class="o">+</span> <span class="sa">fr</span><span class="s2">&quot;&lt;/s_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="n">output</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;&lt;sep/&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">json2token</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">update_special_tokens_for_json_key</span><span class="p">,</span> <span class="n">sort_json_key</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">/&gt;&quot;</span> <span class="ow">in</span> <span class="n">additional_tokens</span><span class="p">:</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">/&gt;&quot;</span>  <span class="c1"># for categorical special tokens</span>
+            <span class="k">return</span> <span class="n">obj</span>
+    
+    <span class="k">def</span> <span class="nf">add_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_of_tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add tokens to tokenizer and resize the token embeddings of the decoder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newly_added_num</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">add_tokens</span><span class="p">(</span><span class="n">list_of_tokens</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">newly_added_num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">resize_token_embeddings</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_length</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load image from image_path of given dataset_path and convert into input_tensor and labels</span>
+<span class="sd">        Convert gt data into input_ids (tokenized string)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            input_tensor : preprocessed image</span>
+<span class="sd">            input_ids : tokenized gt_data</span>
+<span class="sd">            labels : masked labels (model doesn&#39;t need to predict prompt and pad token)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="c1"># pixel values (we remove the batch dimension)</span>
+        <span class="n">pixel_values</span> <span class="o">=</span> <span class="n">processor</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">),</span> <span class="n">random_padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pixel_values</span>
+        <span class="n">pixel_values</span> <span class="o">=</span> <span class="n">pixel_values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+        <span class="c1"># labels, which are the input ids of the target sequence</span>
+        <span class="n">target_sequence</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gt_token_sequences</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># can be more than one, e.g., DocVQA Task 1</span>
+        <span class="n">input_ids</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">(</span>
+            <span class="n">target_sequence</span><span class="p">,</span>
+            <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span>
+            <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span>
+        <span class="p">)[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">input_ids</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span>  <span class="c1"># model doesn&#39;t need to predict pad token</span>
+        <span class="c1"># labels[: torch.nonzero(labels == self.prompt_end_token_id).sum() + 1] = self.ignore_id  # model doesn&#39;t need to predict prompt (for VQA)</span>
+        
+        <span class="n">encoding</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">pixel_values</span><span class="o">=</span><span class="n">pixel_values</span><span class="p">,</span>
+                        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">encoding</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s create the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">DonutDataset</span><span class="p">(</span><span class="s2">&quot;nielsr/rvl_cdip_10_examples_per_class_donut&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">,</span>
+                             <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">task_start_token</span><span class="o">=</span><span class="s2">&quot;&lt;s_rvlcdip&gt;&quot;</span><span class="p">,</span> <span class="n">prompt_end_token</span><span class="o">=</span><span class="s2">&quot;&lt;s_rvlcdip&gt;&quot;</span><span class="p">,</span>
+                             <span class="n">sort_json_key</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># rvlcdip dataset is preprocessed, so no need for this</span>
+                             <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:datasets.builder:Using custom data configuration nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af
+WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datasets/nielsr___parquet/nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af/0.0.0/2a3b91fbd88a2c90d1dbbb32b460cf621d31bd5b05b934492fdef7d8d6f236ec)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check the first item of this dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pixel_values&#39;: tensor([[[-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          ...,
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.]],
+ 
+         [[-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          ...,
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.]],
+ 
+         [[-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          ...,
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.],
+          [-1., -1., -1.,  ..., -1., -1., -1.]]]),
+ &#39;labels&#39;: tensor([57541, 57532, 57542,     2,  -100,  -100,  -100,  -100])}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-pytorch-dataloader">
+<h1>Create PyTorch DataLoader<a class="headerlink" href="#create-pytorch-dataloader" title="Permalink to this headline">#</a></h1>
+<p>Now that we’ve created a PyTorch dataset, we can create a corresponding DataLoader:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="c1"># I&#39;m using a small batch size to make sure it fits in the memory Colab provides</span>
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check out the first batch:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;pixel_values&#39;, &#39;labels&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check the labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+  <span class="k">if</span> <span class="nb">id</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">100</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">decode</span><span class="p">([</span><span class="nb">id</span><span class="p">]))</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;s_class&gt;
+&lt;form/&gt;
+&lt;/s_class&gt;
+&lt;/s&gt;
+-100
+-100
+-100
+-100
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize the pixel values by denormalizing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">)</span>
+<span class="n">std</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">)</span>
+
+<span class="c1"># unnormalize</span>
+<span class="n">reconstructed_image</span> <span class="o">=</span> <span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;pixel_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">std</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">mean</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="c1"># unrescale</span>
+<span class="n">reconstructed_image</span> <span class="o">=</span> <span class="n">reconstructed_image</span> <span class="o">*</span> <span class="mi">255</span>
+<span class="c1"># convert to numpy of shape HWC</span>
+<span class="n">reconstructed_image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">reconstructed_image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">reconstructed_image</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+<span class="n">image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/donut_rvl_cdip_35_0.png" src="../_images/donut_rvl_cdip_35_0.png" />
+</div>
+</div>
+<p>This indeed looks like an email. So data preparation seems ok!</p>
+</section>
+<section id="train-model">
+<h1>Train model<a class="headerlink" href="#train-model" title="Permalink to this headline">#</a></h1>
+<p>Ok there’s one additional thing before we can start training the model: during training, the model can create the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> (the decoder inputs) automatically based on the <code class="docutils literal notranslate"><span class="pre">labels</span></code> (by simply shifting them one position to the right, prepending the <code class="docutils literal notranslate"><span class="pre">decoder_start_token_id</span></code> and replacing labels which are -100 by the <code class="docutils literal notranslate"><span class="pre">pad_token_id</span></code>). Therefore, we need to set those variables, to make sure the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> are created automatically.</p>
+<p>This ensures we only need to prepare labels for the model. Theoretically you can also create the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> yourself and not set the 2 variables below. This is what the original authors of Donut did.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span>
+<span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">decoder_start_token_id</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">([</span><span class="s1">&#39;&lt;s_rvlcdip&gt;&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sanity check</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pad token ID:&quot;</span><span class="p">,</span> <span class="n">processor</span><span class="o">.</span><span class="n">decode</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Decoder start token ID:&quot;</span><span class="p">,</span> <span class="n">processor</span><span class="o">.</span><span class="n">decode</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">decoder_start_token_id</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pad token ID: &lt;pad&gt;
+Decoder start token ID: &lt;s_rvlcdip&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s train!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: use lightning and gradient accumulation</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span> 
+<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch:&quot;</span><span class="p">,</span> <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">loss_values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pbar</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">pixel_values</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;pixel_values&quot;</span><span class="p">]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">pixel_values</span><span class="o">=</span><span class="n">pixel_values</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">loss</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">loss_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss_values</span><span class="p">)})</span>
+        <span class="c1"># if i % 100 == 0:</span>
+        <span class="c1">#     print(&quot;Training Loss:&quot;, loss.item())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training loss:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss_values</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch: 1
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "b77e7d7de216474992735f7b83bb7c2c", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 4.258443092554808
+Epoch: 2
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6018940bef834108a77f85308b89c972", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 1.0265993192791938
+Epoch: 3
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "9778381cb4d146ee92862d82ac7be2ce", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.8034393667243421
+Epoch: 4
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "fcaef63d67334988bc982c71e5322097", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.7249752737581729
+Epoch: 5
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "1f2291460cf0430e9f60393379155b81", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.6544361660722643
+Epoch: 6
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7684cf19c914438781827f7e167e8a40", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.5928132294211537
+Epoch: 7
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "2d8adca96fe24ccf97199424398845b7", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.4946917190682143
+Epoch: 8
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "5f57269159044d93b64690abe5522776", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.442455020849593
+Epoch: 9
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7ab3d9929b1c46e69adbb22ba9e5c5bc", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.3371967544371728
+Epoch: 10
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "aebda1178997446a827f6075fa5f6612", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.26753298405383247
+Epoch: 11
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a67834314278493cb03c1fb921dac196", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.1616953276185086
+Epoch: 12
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "4fabf910096946fa8eee9e33ba846034", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.15125833035854158
+Epoch: 13
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6803c8823d4149a0b1b1f5587a67bca6", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.09057423211925197
+Epoch: 14
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "3daaad51387f4ee882c8e0785838e43b", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.0899100207054289
+Epoch: 15
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "35ebb15805104472b0ab2b6bc5ea2a68", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.0469207254362118
+Epoch: 16
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e4a2aeb9e21c4826a6da24e42384f838", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.02693690705273184
+Epoch: 17
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "57933235888546a6a306158b99299b91", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.02083131925046473
+Epoch: 18
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "664efb452bec4e2cb84bd6654b24a587", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.022656715937228
+Epoch: 19
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0210fde9954045f08dbf9d8afd920043", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.02677860253952531
+Epoch: 20
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "253807ef058f4b63abed675a77836a29", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.01309830157288161
+Epoch: 21
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0653cb2f483645a0a48424d0b2ef2de0", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.028776816584581866
+Epoch: 22
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "44d0d9d066784b15a61e6efcbca2d8cc", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.015527671215022566
+Epoch: 23
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "664d9bd0fe7647e981d3a750f6fd44c6", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.012969328581675654
+Epoch: 24
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "dfdb2064accc4e5499caf9e65ef24048", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.006428889195058218
+Epoch: 25
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "f06bf32a9858491abfb8cb945ea96232", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.006944572782913383
+Epoch: 26
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "f60476142e9b4f82904c3f68c59b01e3", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.004650458294736382
+Epoch: 27
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "19817dacff1441ca80e631e70ba23307", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.004691931716615727
+Epoch: 28
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "674ebfc37f4a4228a3639aec77272d68", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.005088467271230001
+Epoch: 29
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8d2602d0df33479badcddd90aa62c5a8", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.04892722136655721
+Epoch: 30
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "3747a1092b944362a2709a053116b6ae", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.03167146540940848
+Epoch: 31
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a68ad6182b4c43309039b0dc8dcf279c", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.01543098238357743
+Epoch: 32
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "98edc650c67f49048834d3deb0ef11e4", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.039414109803965404
+Epoch: 33
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "be0e6bef149341afaf021195f12cb3d5", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.010908508659713333
+Epoch: 34
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "493e765f77a34d8d84eacfcedf287ce4", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.010789092920458643
+Epoch: 35
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "bb6a7c61b7f0454f8fc3c314b90e86ad", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss: 0.004408232630771636
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluate">
+<h1>Evaluate<a class="headerlink" href="#evaluate" title="Permalink to this headline">#</a></h1>
+<p>Finally, we compute the accuracy on the test set.</p>
+<p>Note that this will be far from perfect as we were just training on a toy dataset. The entire dataset consists of 400,000 images.</p>
+<p>We’ll verify whether the model is better than random (which means 1/number of classes = 1/16 = 0.0625) accuracy.</p>
+<p>We’ll use the token2json method of the processor to turn the generated sequences into JSON.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">F1Score</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;nielsr/rvl_cdip_10_examples_per_class_donut&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+
+<span class="n">f1_metric</span> <span class="o">=</span> <span class="n">F1Score</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">output_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">accs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)):</span>
+    <span class="c1"># prepare encoder inputs</span>
+    <span class="n">pixel_values</span> <span class="o">=</span> <span class="n">processor</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">),</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pixel_values</span>
+    <span class="n">pixel_values</span> <span class="o">=</span> <span class="n">pixel_values</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="c1"># prepare decoder inputs</span>
+    <span class="n">task_prompt</span> <span class="o">=</span> <span class="s2">&quot;&lt;s_rvlcdip&gt;&quot;</span>
+    <span class="n">decoder_input_ids</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">(</span><span class="n">task_prompt</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+    <span class="n">decoder_input_ids</span> <span class="o">=</span> <span class="n">decoder_input_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    
+    <span class="c1"># autoregressively generate sequence</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+            <span class="n">pixel_values</span><span class="p">,</span>
+            <span class="n">decoder_input_ids</span><span class="o">=</span><span class="n">decoder_input_ids</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_position_embeddings</span><span class="p">,</span>
+            <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">pad_token_id</span><span class="o">=</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+            <span class="n">eos_token_id</span><span class="o">=</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token_id</span><span class="p">,</span>
+            <span class="n">use_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">num_beams</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">bad_words_ids</span><span class="o">=</span><span class="p">[[</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">unk_token_id</span><span class="p">]],</span>
+            <span class="n">return_dict_in_generate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># turn into JSON</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">batch_decode</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">sequences</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&lt;.*?&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># remove first task start token</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">token2json</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+    <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">])</span>
+    <span class="n">gt</span> <span class="o">=</span> <span class="n">ground_truth</span><span class="p">[</span><span class="s2">&quot;gt_parse&quot;</span><span class="p">]</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">gt</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">])</span>
+
+    <span class="n">accs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">])</span>
+    <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gt</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">])</span>
+    <span class="n">output_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+<span class="n">le</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">le</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+<span class="n">target_indices</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+<span class="n">pred_indices</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accuracies&quot;</span><span class="p">:</span> <span class="n">accs</span><span class="p">,</span> <span class="s2">&quot;mean_accuracy&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accs</span><span class="p">)}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;length : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:datasets.builder:Using custom data configuration nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af
+WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datasets/nielsr___parquet/nielsr--rvl_cdip_10_examples_per_class_donut-f7a67080e6d136af/0.0.0/2a3b91fbd88a2c90d1dbbb32b460cf621d31bd5b05b934492fdef7d8d6f236ec)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "2c6a8bef3322491aaccaa2013222fc38", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;accuracies&#39;: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0], &#39;mean_accuracy&#39;: 0.5125} length : 160
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;accuracy:&quot;</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;mean_accuracy&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f1:&quot;</span><span class="p">,</span> <span class="n">f1_metric</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred_indices</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">target_indices</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>accuracy: 0.5125
+f1: tensor(0.5125)
+</pre></div>
+</div>
+</div>
+</div>
+<p>That looks a lot better than random accuracy, suggesting that our model seems to learn well!</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./doc_ai_notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../doc_ai.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Document AI: Understanding Photos of Documents</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By KUNGFU.AI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
