@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Set-up environment &#8212; Training Computer Vision Models for Structured Prediction</title>
+    <title>Fine Tuning DONUT on RVL-CDIP Dataset &#8212; Training Computer Vision Models for Structured Prediction</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,6 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fine Tune DONUT on the CORD Dataset" href="donut_cord.html" />
     <link rel="prev" title="Document AI: Understanding Photos of Documents" href="../doc_ai.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -120,7 +121,18 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Set-up environment
+     Fine Tuning
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       DONUT
+      </span>
+     </code>
+     on RVL-CDIP Dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="donut_cord.html">
+     Fine Tune DONUT on the CORD Dataset
     </a>
    </li>
   </ul>
@@ -331,37 +343,37 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-environment">
    Set-up environment
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-dataset">
    Load dataset
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-model-and-processor">
    Load model and processor
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#prepare-dataset">
    Prepare dataset
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#create-pytorch-dataloader">
    Create PyTorch DataLoader
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#train-model">
    Train model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#evaluate">
    Evaluate
   </a>
@@ -375,7 +387,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Set-up environment</h1>
+                <h1>Fine Tuning DONUT on RVL-CDIP Dataset</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -385,37 +397,37 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-environment">
    Set-up environment
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-dataset">
    Load dataset
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-model-and-processor">
    Load model and processor
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#prepare-dataset">
    Prepare dataset
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#create-pytorch-dataloader">
    Create PyTorch DataLoader
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#train-model">
    Train model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#evaluate">
    Evaluate
   </a>
@@ -430,9 +442,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="set-up-environment">
-<h1>Set-up environment<a class="headerlink" href="#set-up-environment" title="Permalink to this headline">#</a></h1>
-<p>Adapted from this <a class="reference external" href="https://colab.research.google.com/github/NielsRogge/Transformers-Tutorials/blob/master/Donut/RVL-CDIP/Fine_tune_Donut_on_toy_RVL_CDIP_(document_image_classification).ipynb">notebook</a></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="fine-tuning-donut-on-rvl-cdip-dataset">
+<h1>Fine Tuning <code class="docutils literal notranslate"><span class="pre">DONUT</span></code> on RVL-CDIP Dataset<a class="headerlink" href="#fine-tuning-donut-on-rvl-cdip-dataset" title="Permalink to this headline">#</a></h1>
+<p>This is adapted from <a class="reference external" href="https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Donut/RVL-CDIP/Fine_tune_Donut_on_toy_RVL_CDIP_(document_image_classification).ipynb">this notebook</a>.</p>
+<section id="set-up-environment">
+<h2>Set-up environment<a class="headerlink" href="#set-up-environment" title="Permalink to this headline">#</a></h2>
 <p>First, let’s install the relevant libraries: 🤗 Transformers &amp; Datasets, and Sentencepiece (the latter is used for tokenization).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -457,8 +471,8 @@ title="Print to PDF"
 </div>
 </section>
 <section id="load-dataset">
-<h1>Load dataset<a class="headerlink" href="#load-dataset" title="Permalink to this headline">#</a></h1>
-<p>Next, let’s load a dataset from the hub. I’ve prepared a toy dataset which is a small subset of <a class="reference external" href="https://paperswithcode.com/dataset/rvl-cdip">RVL-CDIP</a>, consisting of (image, text) pairs. The text is what the model should learn to generate given the visual input.</p>
+<h2>Load dataset<a class="headerlink" href="#load-dataset" title="Permalink to this headline">#</a></h2>
+<p>Next, let’s load a toy dataset which is a small subset of <a class="reference external" href="https://paperswithcode.com/dataset/rvl-cdip">RVL-CDIP</a>, consisting of (image, text) pairs. The text is what the model should learn to generate given the visual input.</p>
 <p>Here, it’s important to understand how targets should be prepared for Donut: you need to create a string called “ground_truth” (or “ground_truths”, in case there are multiple possible ground truth target sequences, see DocVQA). This is a string format of a dictionary (JSON dumped), containing either a <code class="docutils literal notranslate"><span class="pre">gt_parse</span></code> or <code class="docutils literal notranslate"><span class="pre">gt_parses</span></code> key.</p>
 <p>For document image classification, the <code class="docutils literal notranslate"><span class="pre">gt_parse</span></code> follows the format of <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">{class_name}}</span></code>, for example, <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">&quot;scientific_report&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;class&quot;</span> <span class="pre">:</span> <span class="pre">&quot;presentation&quot;}</span></code>.</p>
 <p>The notebook for creating a 🤗 Dataset (custom data) for Donut can be found in my Github repo <a class="reference external" href="https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Donut/RVL-CDIP/Preparing_an_image_classification_dataset_for_Donut.ipynb">here</a>.</p>
@@ -540,10 +554,14 @@ WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datas
 </div>
 </section>
 <section id="load-model-and-processor">
-<h1>Load model and processor<a class="headerlink" href="#load-model-and-processor" title="Permalink to this headline">#</a></h1>
+<h2>Load model and processor<a class="headerlink" href="#load-model-and-processor" title="Permalink to this headline">#</a></h2>
 <p>Next, we’ll load the model itself (Donut is an instance of the <a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/vision-encoder-decoder">VisionEncoderDecoderModel</a> class), as well as its processor (<code class="docutils literal notranslate"><span class="pre">DonutProcessor</span></code>), which can be used to prepare data for the model.</p>
 <p>We’ll update some things; namely the max sequence length of the decoder, as well as the size of the images. Note that this impacts the amount of memory used when fine-tuning the model.</p>
 <p>Note that the exact hyperparameters can be found here: <a class="reference external" href="https://github.com/clovaai/donut/blob/master/config/train_rvlcdip.yaml">https://github.com/clovaai/donut/blob/master/config/train_rvlcdip.yaml</a>.</p>
+<p>We are using the pretrained model called <code class="docutils literal notranslate"><span class="pre">nielsr/donut-base</span></code>. Here is the training information provided by the author:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Trained</span> <span class="k">with</span> <span class="mi">64</span> <span class="n">A100</span> <span class="n">GPUs</span> <span class="p">(</span><span class="o">~</span><span class="mf">2.5</span> <span class="n">days</span><span class="p">),</span> <span class="n">number</span> <span class="n">of</span> <span class="n">layers</span> <span class="p">(</span><span class="n">encoder</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">2</span><span class="p">},</span> <span class="n">decoder</span><span class="p">:</span> <span class="mi">4</span><span class="p">),</span> <span class="nb">input</span> <span class="n">size</span> <span class="mi">2560</span><span class="n">x1920</span><span class="p">,</span> <span class="n">swin</span> <span class="n">window</span> <span class="n">size</span> <span class="mi">10</span><span class="p">,</span> <span class="n">IIT</span><span class="o">-</span><span class="n">CDIP</span> <span class="p">(</span><span class="mi">11</span><span class="n">M</span><span class="p">)</span> <span class="ow">and</span> <span class="n">SynthDoG</span> <span class="p">(</span><span class="n">English</span><span class="p">,</span> <span class="n">Chinese</span><span class="p">,</span> <span class="n">Japanese</span><span class="p">,</span> <span class="n">Korean</span><span class="p">,</span> <span class="mf">0.5</span><span class="n">M</span> <span class="n">x</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">VisionEncoderDecoderConfig</span>
@@ -596,7 +614,7 @@ WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datas
 </div>
 </section>
 <section id="prepare-dataset">
-<h1>Prepare dataset<a class="headerlink" href="#prepare-dataset" title="Permalink to this headline">#</a></h1>
+<h2>Prepare dataset<a class="headerlink" href="#prepare-dataset" title="Permalink to this headline">#</a></h2>
 <p>The first thing we’ll do is add the class names as added tokens to the vocabulary of the decoder of Donut, and the corresponding tokenizer.</p>
 <p>This will result in a slight increase in performance, as otherwise a class might be split up into multiple subword tokens (e.g. the class “advertisement” might be split up into “adv”, “ertisement”). It is beneficial to let the model just learn a single embedding vector for the token “advertisement”.</p>
 <div class="cell docutils container">
@@ -870,7 +888,7 @@ WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datas
 </div>
 </section>
 <section id="create-pytorch-dataloader">
-<h1>Create PyTorch DataLoader<a class="headerlink" href="#create-pytorch-dataloader" title="Permalink to this headline">#</a></h1>
+<h2>Create PyTorch DataLoader<a class="headerlink" href="#create-pytorch-dataloader" title="Permalink to this headline">#</a></h2>
 <p>Now that we’ve created a PyTorch dataset, we can create a corresponding DataLoader:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -947,7 +965,7 @@ WARNING:datasets.builder:Reusing dataset parquet (/root/.cache/huggingface/datas
 <p>This indeed looks like an email. So data preparation seems ok!</p>
 </section>
 <section id="train-model">
-<h1>Train model<a class="headerlink" href="#train-model" title="Permalink to this headline">#</a></h1>
+<h2>Train model<a class="headerlink" href="#train-model" title="Permalink to this headline">#</a></h2>
 <p>Ok there’s one additional thing before we can start training the model: during training, the model can create the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> (the decoder inputs) automatically based on the <code class="docutils literal notranslate"><span class="pre">labels</span></code> (by simply shifting them one position to the right, prepending the <code class="docutils literal notranslate"><span class="pre">decoder_start_token_id</span></code> and replacing labels which are -100 by the <code class="docutils literal notranslate"><span class="pre">pad_token_id</span></code>). Therefore, we need to set those variables, to make sure the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> are created automatically.</p>
 <p>This ensures we only need to prepare labels for the model. Theoretically you can also create the <code class="docutils literal notranslate"><span class="pre">decoder_input_ids</span></code> yourself and not set the 2 variables below. This is what the original authors of Donut did.</p>
 <div class="cell docutils container">
@@ -1225,7 +1243,7 @@ Epoch: 35
 </div>
 </section>
 <section id="evaluate">
-<h1>Evaluate<a class="headerlink" href="#evaluate" title="Permalink to this headline">#</a></h1>
+<h2>Evaluate<a class="headerlink" href="#evaluate" title="Permalink to this headline">#</a></h2>
 <p>Finally, we compute the accuracy on the test set.</p>
 <p>Note that this will be far from perfect as we were just training on a toy dataset. The entire dataset consists of 400,000 images.</p>
 <p>We’ll verify whether the model is better than random (which means 1/number of classes = 1/16 = 0.0625) accuracy.</p>
@@ -1320,6 +1338,7 @@ f1: tensor(0.5125)
 </div>
 <p>That looks a lot better than random accuracy, suggesting that our model seems to learn well!</p>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1354,6 +1373,13 @@ f1: tensor(0.5125)
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Document AI: Understanding Photos of Documents</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="donut_cord.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fine Tune DONUT on the CORD Dataset</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
