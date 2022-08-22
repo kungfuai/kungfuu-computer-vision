@@ -17,7 +17,11 @@ At the end of the course. we hope you feel prepared to work on a practical proje
 
 You can run the code in each course project using Colab notebooks, whenever you see a rocket-shaped launch button in the top right corner of the page. This is a quick way to get started, without needing to install CUDA drivers and other dependencies. Alternatively, you can create a repo and accumulate source code as you evolve it in the course. Either way works.
 
-The course is orgaized as the following course projects:
+The earlier projects of the course are more like code labs, and focus on a step by step guide to set up the code base and modules to perform model training experiments. You are tasked with filling out code blocks or functions to make the system work. This likely resembles the *development* phase of a practical project, where the emphasis may be put on code quality and readability.
+
+The later projects of the course are more like mini research projects that aim to answer a set of questions around what makes a good model training recipe. You are tasked with reviewing, revising and creating self contained notebooks or a code paths that produce replicable experiments and reports. This likely resembles highly iterative, open-ended *research* phase of a practical project. 
+
+The course projects are listed below:
 
 ```{tableofcontents}
 ```

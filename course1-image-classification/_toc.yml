@@ -3,6 +3,24 @@
 
 format: jb-book
 root: intro
+options:
+  numbered: true
 chapters:
 - file: p1_dataset
 - file: p2_training
+- file: p3_dataloader
+- file: p4_aug
+- file: p5_arch
+- file: p6_optimizer
+- file: p7_loss
+- file: p8_predictor
+- file: p9
+  sections:
+  - file: p9_01_scale
+  - file: p9_02_self_supervised
+  - file: p9_03_multitask
+  - file: p9_04_bayesian
+  - file: p9_05_unlearn
+  - file: p9_06_few_shot
+  - file: p9_07_explain
+  - file: p9_08_federated
