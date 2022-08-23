@@ -201,6 +201,28 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="keys.html">
+   10. Keys to Some Projects
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="p1_dataset_key.html">
+     10.1. Project 1: Preparing an image dataset for model training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="p2_training_key.html">
+     10.2. Project 2: A minimal model training experiment
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
     </div>
@@ -252,6 +274,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/p3_dataloader.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -356,12 +407,51 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-the-dataset-and-dataloader">
+   3.1. Prepare the dataset and dataloader
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-profiling-throughput-for-data-scan">
+   3.2. Simple profiling: Throughput for Data Scan
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-complex-image-transforms">
+   3.3. More Complex Image Transforms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deeper-profiling-using-tensorboard-profiler">
+   3.4. Deeper Profiling using Tensorboard Profiler
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -373,6 +463,34 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-the-dataset-and-dataloader">
+   3.1. Prepare the dataset and dataloader
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-profiling-throughput-for-data-scan">
+   3.2. Simple profiling: Throughput for Data Scan
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-complex-image-transforms">
+   3.3. More Complex Image Transforms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deeper-profiling-using-tensorboard-profiler">
+   3.4. Deeper Profiling using Tensorboard Profiler
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -383,7 +501,360 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="efficent-data-loading-for-model-training">
 <h1><span class="section-number">3. </span>Efficent Data Loading for Model Training<a class="headerlink" href="#efficent-data-loading-for-model-training" title="Permalink to this headline">#</a></h1>
 <p>Iteration speed is one of the most important factors in the success of experimentation and model training. This is because machine learning is very much an empirical science. Serious researchers and practitioners tend not to make bold claims that certain methods work for all problems. Instead, recipes need to be found for a particular domain, and even a particular dataset.</p>
-<p>Data loading is an important factor for iteration speed. In this project we will look at the different choices of data loading.</p>
+<p>Data loading is an important factor for iteration speed. For computer vision problems where you have a non-trivial amount of data, this matters. In this project we will look at the different choices of data loading and the impact on speed (not accuracy, yet).</p>
+<section id="prepare-the-dataset-and-dataloader">
+<h2><span class="section-number">3.1. </span>Prepare the dataset and dataloader<a class="headerlink" href="#prepare-the-dataset-and-dataloader" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">CIFAR10</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span> <span class="k">as</span> <span class="n">T</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="n">transform</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">T</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))])</span>
+
+<span class="n">cifar10_train</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Files already downloaded and verified
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-profiling-throughput-for-data-scan">
+<h2><span class="section-number">3.2. </span>Simple profiling: Throughput for Data Scan<a class="headerlink" href="#simple-profiling-throughput-for-data-scan" title="Permalink to this headline">#</a></h2>
+<p>First we profile the dataloader for its speed in scanning data, without considering moving data to GPU for training.</p>
+<p>How many examples can the dataloader scan per second? How does parameters <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>, <code class="docutils literal notranslate"><span class="pre">shuffle</span></code> and <code class="docutils literal notranslate"><span class="pre">num_workers</span></code> impact throughput?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+
+<span class="k">def</span> <span class="nf">profile_scan_throughput</span><span class="p">(</span><span class="n">dataloader</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">30000</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Add `while True` if you are worried about a StopIteration error.</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+        <span class="n">inputs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scanning </span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2"> examples took </span><span class="si">{</span><span class="n">seconds</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds. Throughput: </span><span class="si">{</span><span class="n">cnt</span> <span class="o">/</span> <span class="n">seconds</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> examples per second.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "30aae94e3c104c139f8be30de15f7f17", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30016 examples took 46.25 seconds. Throughput: 649.06 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "28ea88b7c66f455999c77d1866a0acc1", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30000 examples took 43.22 seconds. Throughput: 694.14 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do it again to observe the variance</span>
+<span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "47ae50df8ab44f21be07de3fa946a594", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30000 examples took 42.92 seconds. Throughput: 698.95 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "059bd2af95774639b733854b623c03cb", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30208 examples took 56.42 seconds. Throughput: 535.40 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "65bc3385e50a45f89b94bac313f67c1e", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30208 examples took 56.35 seconds. Throughput: 536.08 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6a877e875f6d44da967a3ef8b23c09b6", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30208 examples took 36.57 seconds. Throughput: 825.94 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "d49a50c312b54ce1afd93fe9cc150070", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 30208 examples took 13.58 seconds. Throughput: 2224.26 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the above numbers,</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">num_workers</span></code> had a big impact on the throughput,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> had small impact,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code> had no impact.</p></li>
+</ul>
+<p>Are there other important dataloder parameters we should investigate?</p>
+</section>
+<section id="more-complex-image-transforms">
+<h2><span class="section-number">3.3. </span>More Complex Image Transforms<a class="headerlink" href="#more-complex-image-transforms" title="Permalink to this headline">#</a></h2>
+<p>Image transforms and augmentations (we will come back to this in the next project), can levy a big toll on CPU and impact throughput.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: add examples</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+    <span class="p">[</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">RandomRotation</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+     <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))]</span>
+<span class="p">)</span>
+<span class="n">cifar10_train2</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Files already downloaded and verified
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">15000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "58e98a193a8c494a89b89d98145c8aba", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 15104 examples took 41.06 seconds. Throughput: 367.85 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">15000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "87e40e7ec7444002bcf0332ad662fcea", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scanning 15104 examples took 8.52 seconds. Throughput: 1773.74 examples per second.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="deeper-profiling-using-tensorboard-profiler">
+<h2><span class="section-number">3.4. </span>Deeper Profiling using Tensorboard Profiler<a class="headerlink" href="#deeper-profiling-using-tensorboard-profiler" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install torch_tb_profiler
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Requirement already satisfied: torch_tb_profiler in /usr/local/lib/python3.7/dist-packages (0.4.0)
+Requirement already satisfied: tensorboard!=2.1.0,&gt;=1.15 in /usr/local/lib/python3.7/dist-packages (from torch_tb_profiler) (2.8.0)
+Requirement already satisfied: pandas&gt;=1.0.0 in /usr/local/lib/python3.7/dist-packages (from torch_tb_profiler) (1.3.5)
+Requirement already satisfied: numpy&gt;=1.17.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (1.21.6)
+Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (2022.2.1)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (2.8.2)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.7/dist-packages (from python-dateutil&gt;=2.7.3-&gt;pandas&gt;=1.0.0-&gt;torch_tb_profiler) (1.15.0)
+Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2.23.0)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.4.6)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.6.1)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.35.0)
+Requirement already satisfied: werkzeug&gt;=0.11.15 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.0.1)
+Requirement already satisfied: grpcio&gt;=1.24.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.47.0)
+Requirement already satisfied: setuptools&gt;=41.0.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (57.4.0)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.8.1)
+Requirement already satisfied: wheel&gt;=0.26 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.37.1)
+Requirement already satisfied: protobuf&gt;=3.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.17.3)
+Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.4.1)
+Requirement already satisfied: absl-py&gt;=0.4 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.2.0)
+Requirement already satisfied: cachetools&lt;5.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.2.4)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.9)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.2.8)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.3.1)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.7/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.12.0)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.8.1)
+Requirement already satisfied: typing-extensions&gt;=3.6.4 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.1.1)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.7/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.4.8)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.0.4)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.24.3)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2.10)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2022.6.15)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.2.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">profile_with_torch_profiler</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>  
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span>
+        <span class="n">schedule</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">on_trace_ready</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">tensorboard_trace_handler</span><span class="p">(</span><span class="s1">&#39;./log/resnet18&#39;</span><span class="p">),</span>
+        <span class="n">record_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">profile_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">with_stack</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">prof</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">step</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">train_step</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+            <span class="n">prof</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># Need to call this at the end of each step to notify profiler of steps&#39; boundary.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/torchvision/models/_utils.py:209: UserWarning: The parameter &#39;pretrained&#39; is deprecated since 0.13 and will be removed in 0.15, please use &#39;weights&#39; instead.
+  f&quot;The parameter &#39;{pretrained_param}&#39; is deprecated since 0.13 and will be removed in 0.15, &quot;
+/usr/local/lib/python3.7/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for &#39;weights&#39; are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can bring up a Tensorboard to see where time is spent. You can pick other choices in the “Views” dropdown menu:</p>
+<ul class="simple">
+<li><p>The operator view displays the performance of every PyTorch operator that is executed either on the host or device.</p></li>
+<li><p>The GPU kernel view shows all kernels’ time spent on GPU.</p></li>
+<li><p>The trace view shows timeline of profiled operators and GPU kernels. (Can be slow to load!)</p></li>
+<li><p>The memory view shows memory usage breakdown by operator and time.</p></li>
+<li><p>The module view shows time spent in each sub-module in the main <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> being trained.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reload_ext</span> tensorboard
+<span class="o">%</span><span class="k">tensorboard</span> --logdir=./log
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/javascript">
+        (async () => {
+            const url = new URL(await google.colab.kernel.proxyPort(6006, {'cache': true}));
+            url.searchParams.set('tensorboardColab', 'true');
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.setAttribute('width', '100%');
+            iframe.setAttribute('height', '800');
+            iframe.setAttribute('frameborder', 0);
+            document.body.appendChild(iframe);
+        })();
+    </script></div>
+</div>
+<p>Here are what the above views look like:</p>
+<ul class="simple">
+<li><p>Summary view
+<img alt="" src="_images/summary.png" /></p></li>
+<li><p>Operator view
+<img alt="" src="_images/operator.png" /></p></li>
+<li><p>GPU kernel view
+<img alt="" src="_images/gpu.png" /></p></li>
+<li><p>Trace view
+<img alt="" src="_images/trace.png" /></p></li>
+<li><p>Memory view
+<img alt="" src="_images/memory.png" /></p></li>
+<li><p>Module view
+<img alt="" src="_images/module.png" /></p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

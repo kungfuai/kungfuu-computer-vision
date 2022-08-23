@@ -703,26 +703,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "f0ade3b3518e4a888a4f8ba687f0107b", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "83ad1b8dd9ad42a69c2e3f165dc5257d", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "baf78f2b46d84679ac9c863e1fb59206", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a023567e479f4bdc959700c99627de65", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d958118b6b0744b3b4cccf715b5cbba1", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b8d2e88e3a1445ae9d9d45f253a48cb3", "version_major": 2, "version_minor": 0}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c2147907e97f41f6baf0f6969eafac5e", "version_major": 2, "version_minor": 0}
-</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/torch/functional.py:478: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  ../aten/src/ATen/native/TensorShape.cpp:2894.)
-  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="create-pytorch-dataset">
@@ -1330,39 +1310,6 @@ O
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        _|    _|  _|    _|    _|_|_|    _|_|_|  _|_|_|  _|      _|    _|_|_|      _|_|_|_|    _|_|      _|_|_|  _|_|_|_|
-        _|    _|  _|    _|  _|        _|          _|    _|_|    _|  _|            _|        _|    _|  _|        _|
-        _|_|_|_|  _|    _|  _|  _|_|  _|  _|_|    _|    _|  _|  _|  _|  _|_|      _|_|_|    _|_|_|_|  _|        _|_|_|
-        _|    _|  _|    _|  _|    _|  _|    _|    _|    _|    _|_|  _|    _|      _|        _|    _|  _|        _|
-        _|    _|    _|_|      _|_|_|    _|_|_|  _|_|_|  _|      _|    _|_|_|      _|        _|    _|    _|_|_|  _|_|_|_|
-
-        To login, `huggingface_hub` now requires a token generated from https://huggingface.co/settings/tokens .
-        
-Token: Traceback (most recent call last):
-  File &quot;/usr/lib/python3.7/getpass.py&quot;, line 77, in unix_getpass
-    passwd = _raw_input(prompt, stream, input=input)
-  File &quot;/usr/lib/python3.7/getpass.py&quot;, line 146, in _raw_input
-    line = input.readline()
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;/usr/local/bin/huggingface-cli&quot;, line 8, in &lt;module&gt;
-    sys.exit(main())
-  File &quot;/usr/local/lib/python3.7/dist-packages/huggingface_hub/commands/huggingface_cli.py&quot;, line 41, in main
-    service.run()
-  File &quot;/usr/local/lib/python3.7/dist-packages/huggingface_hub/commands/user.py&quot;, line 174, in run
-    token = getpass(&quot;Token: &quot;)
-  File &quot;/usr/lib/python3.7/getpass.py&quot;, line 94, in unix_getpass
-    return passwd
-  File &quot;/usr/lib/python3.7/contextlib.py&quot;, line 481, in __exit__
-    def __exit__(self, *exc_details):
-KeyboardInterrupt
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1398,11 +1345,6 @@ KeyboardInterrupt
 <span class="p">)</span>
 
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model_module</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
 </pre></div>
 </div>
 </div>

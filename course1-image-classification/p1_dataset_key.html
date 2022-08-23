@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Project 1: Preparing an image dataset for model training &#8212; Evolve model training recipes for image classification</title>
+    <title>10.1. Project 1: Preparing an image dataset for model training &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,6 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10.2. Project 2: A minimal model training experiment" href="p2_training_key.html" />
+    <link rel="prev" title="10. Keys to Some Projects" href="keys.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -106,7 +108,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="p1_dataset.html">
    1. Preparing an Image Dataset for Model Training
@@ -195,6 +197,28 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="p9_08_federated.html">
      9.8. Privacy: Federated Learning for Image Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="keys.html">
+   10. Keys to Some Projects
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     10.1. Project 1: Preparing an image dataset for model training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="p2_training_key.html">
+     10.2. Project 2: A minimal model training experiment
     </a>
    </li>
   </ul>
@@ -407,22 +431,22 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-1-create-a-dataset-class">
-   Step 1: Create a Dataset class
+   10.1.1. Step 1: Create a Dataset class
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-2-visualize-the-image-data">
-   Step 2: Visualize the image data
+   10.1.2. Step 2: Visualize the image data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-3-create-a-data-loader">
-   Step 3: Create a data loader
+   10.1.3. Step 3: Create a data loader
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#display-images-in-a-grid-using-matplotlib">
-     Display images in a grid using
+     10.1.3.1. Display images in a grid using
      <code class="docutils literal notranslate">
       <span class="pre">
        matplotlib
@@ -434,7 +458,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-4-optional-writing-unit-tests-for-your-dataset-class">
-   Step 4 (optional): Writing unit tests for your dataset class
+   10.1.4. Step 4 (optional): Writing unit tests for your dataset class
   </a>
  </li>
 </ul>
@@ -458,22 +482,22 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-1-create-a-dataset-class">
-   Step 1: Create a Dataset class
+   10.1.1. Step 1: Create a Dataset class
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-2-visualize-the-image-data">
-   Step 2: Visualize the image data
+   10.1.2. Step 2: Visualize the image data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-3-create-a-data-loader">
-   Step 3: Create a data loader
+   10.1.3. Step 3: Create a data loader
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#display-images-in-a-grid-using-matplotlib">
-     Display images in a grid using
+     10.1.3.1. Display images in a grid using
      <code class="docutils literal notranslate">
       <span class="pre">
        matplotlib
@@ -485,7 +509,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-4-optional-writing-unit-tests-for-your-dataset-class">
-   Step 4 (optional): Writing unit tests for your dataset class
+   10.1.4. Step 4 (optional): Writing unit tests for your dataset class
   </a>
  </li>
 </ul>
@@ -499,7 +523,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="project-1-preparing-an-image-dataset-for-model-training">
-<h1>Project 1: Preparing an image dataset for model training<a class="headerlink" href="#project-1-preparing-an-image-dataset-for-model-training" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">10.1. </span>Project 1: Preparing an image dataset for model training<a class="headerlink" href="#project-1-preparing-an-image-dataset-for-model-training" title="Permalink to this headline">#</a></h1>
 <p><strong>Goal:</strong></p>
 <ul class="simple">
 <li><p>Implement a <a class="reference external" href="https://pytorch.org/docs/stable/data.html#map-style-datasets">map-style Dataset class</a>.</p></li>
@@ -513,7 +537,7 @@ title="Print to PDF"
 <li><p>In a notebook, present example images, labels and ensure correct shapes by visual inspection.</p></li>
 </ul>
 <section id="step-1-create-a-dataset-class">
-<h2>Step 1: Create a Dataset class<a class="headerlink" href="#step-1-create-a-dataset-class" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.1.1. </span>Step 1: Create a Dataset class<a class="headerlink" href="#step-1-create-a-dataset-class" title="Permalink to this headline">#</a></h2>
 <p>One of the first things you may need to do in a practical project is to create a custom dataset class. As a start, let us use CIFAR10 raw data as an example to create one. First, we need to download the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -694,7 +718,7 @@ Test passed!
 <p>If the tests works, congratulations! You have completed the first step of the project. You have implemented a dataset class similar to <code class="docutils literal notranslate"><span class="pre">torchvision.datasets.CIFAR10</span></code>.</p>
 </section>
 <section id="step-2-visualize-the-image-data">
-<h2>Step 2: Visualize the image data<a class="headerlink" href="#step-2-visualize-the-image-data" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.1.2. </span>Step 2: Visualize the image data<a class="headerlink" href="#step-2-visualize-the-image-data" title="Permalink to this headline">#</a></h2>
 <p>However, passing the unit tests may not be enough. The content of the image may not make sense even if the shape is correct, depending on how the reshaping of numpy arrays is done.</p>
 <p>In the next cells, display several images from the dataset together with the label. Visually check the image and the label. A helper function is provided.</p>
 <div class="cell docutils container">
@@ -752,7 +776,7 @@ Test passed!
 </div>
 </section>
 <section id="step-3-create-a-data-loader">
-<h2>Step 3: Create a data loader<a class="headerlink" href="#step-3-create-a-data-loader" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.1.3. </span>Step 3: Create a data loader<a class="headerlink" href="#step-3-create-a-data-loader" title="Permalink to this headline">#</a></h2>
 <p>A data loader is a class that can be used to load batches of data. It provides a way to iterate over the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>, returning a batch of data at each iteration.</p>
 <p>For PyTorch, we strongly recommend using the <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader">torch.utils.data.DataLoader</a> class to load the data. It has a lot of built-in functionalities to handle efficient concurrent loading of data that you don’t need to implement from scratch. In our experience, it is rarely needed to implement a custom version of <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>. Getting familar with how to use a PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> is usually enough.</p>
 <p><strong>Your task</strong>: Fill in the missing code in the next cell, so that it can pass the test that follows.</p>
@@ -792,7 +816,7 @@ Test passed!
 </div>
 </div>
 <section id="display-images-in-a-grid-using-matplotlib">
-<h3>Display images in a grid using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code><a class="headerlink" href="#display-images-in-a-grid-using-matplotlib" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.1.3.1. </span>Display images in a grid using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code><a class="headerlink" href="#display-images-in-a-grid-using-matplotlib" title="Permalink to this headline">#</a></h3>
 <p>You can also display multiple images in one figure. This way you can visualize a batch of images easily. Below is a function to start with.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
     <span class="n">nrows</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">+</span> <span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">ncols</span>
@@ -834,7 +858,7 @@ Test passed!
 </section>
 </section>
 <section id="step-4-optional-writing-unit-tests-for-your-dataset-class">
-<h2>Step 4 (optional): Writing unit tests for your dataset class<a class="headerlink" href="#step-4-optional-writing-unit-tests-for-your-dataset-class" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.1.4. </span>Step 4 (optional): Writing unit tests for your dataset class<a class="headerlink" href="#step-4-optional-writing-unit-tests-for-your-dataset-class" title="Permalink to this headline">#</a></h2>
 <p>To make sure your dataset is feeding the right data to the model, visualization is helpful, but unit tests can make certain checks more efficient.</p>
 <p>You may have noticed, in previous steps unit tests such as <code class="docutils literal notranslate"><span class="pre">test_custom_dataset</span></code> are already used to check the correctness of your implementation.</p>
 <p>The following types of unit tests can be written against a dataset class:</p>
@@ -896,6 +920,20 @@ Test passed!
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="keys.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">10. </span>Keys to Some Projects</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="p2_training_key.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">10.2. </span>Project 2: A minimal model training experiment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

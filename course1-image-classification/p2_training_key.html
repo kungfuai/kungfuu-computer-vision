@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Project 2: A minimal model training experiment &#8212; Evolve model training recipes for image classification</title>
+    <title>10.2. Project 2: A minimal model training experiment &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,6 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="10.1. Project 1: Preparing an image dataset for model training" href="p1_dataset_key.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -106,7 +107,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="p1_dataset.html">
    1. Preparing an Image Dataset for Model Training
@@ -195,6 +196,28 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="p9_08_federated.html">
      9.8. Privacy: Federated Learning for Image Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="keys.html">
+   10. Keys to Some Projects
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="p1_dataset_key.html">
+     10.1. Project 1: Preparing an image dataset for model training
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     10.2. Project 2: A minimal model training experiment
     </a>
    </li>
   </ul>
@@ -407,7 +430,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-1-create-a-model-using-lightningmodule">
-   Step 1: Create a model using
+   10.2.1. Step 1: Create a model using
    <code class="docutils literal notranslate">
     <span class="pre">
      LightningModule
@@ -417,22 +440,22 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#installation">
-     Installation
+     10.2.1.1. Installation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#a-simple-image-classifier-module">
-     A simple image classifier module
+     10.2.1.2. A simple image classifier module
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#testing-the-forward-path-of-the-model">
-     Testing the forward path of the model
+     10.2.1.3. Testing the forward path of the model
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#what-is-a-valid-input">
-       What is a valid input?
+       10.2.1.3.1. What is a valid input?
       </a>
      </li>
     </ul>
@@ -441,54 +464,54 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-2-prepare-the-dataset-and-data-loader">
-   Step 2: Prepare the dataset and data loader
+   10.2.2. Step 2: Prepare the dataset and data loader
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-3-training-the-model">
-   Step 3: Training the model
+   10.2.3. Step 3: Training the model
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#loss">
-     Loss
+     10.2.3.1. Loss
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#optimizer">
-     Optimizer
+     10.2.3.2. Optimizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-step">
-     Training Step
+     10.2.3.3. Training Step
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#metrics">
-     Metrics
+     10.2.3.4. Metrics
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     Training loop
+     10.2.3.5. Training loop
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#start-model-training">
-     Start model training
+     10.2.3.6. Start model training
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-4-visualize-model-predictions">
-   Step 4: Visualize model predictions
+   10.2.4. Step 4: Visualize model predictions
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-5-using-the-trainer-provided-by-pytorch-lightning">
-   Step 5: Using the
+   10.2.5. Step 5: Using the
    <code class="docutils literal notranslate">
     <span class="pre">
      Trainer
@@ -499,19 +522,19 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#logging">
-     Logging
+     10.2.5.1. Logging
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hooks">
-   Hooks
+   10.2.6. Hooks
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
-   Step 6 (optional): Track the model’s progress using an experiment tracking tool
+   10.2.7. Step 6 (optional): Track the model’s progress using an experiment tracking tool
   </a>
  </li>
 </ul>
@@ -535,7 +558,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-1-create-a-model-using-lightningmodule">
-   Step 1: Create a model using
+   10.2.1. Step 1: Create a model using
    <code class="docutils literal notranslate">
     <span class="pre">
      LightningModule
@@ -545,22 +568,22 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#installation">
-     Installation
+     10.2.1.1. Installation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#a-simple-image-classifier-module">
-     A simple image classifier module
+     10.2.1.2. A simple image classifier module
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#testing-the-forward-path-of-the-model">
-     Testing the forward path of the model
+     10.2.1.3. Testing the forward path of the model
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#what-is-a-valid-input">
-       What is a valid input?
+       10.2.1.3.1. What is a valid input?
       </a>
      </li>
     </ul>
@@ -569,54 +592,54 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-2-prepare-the-dataset-and-data-loader">
-   Step 2: Prepare the dataset and data loader
+   10.2.2. Step 2: Prepare the dataset and data loader
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-3-training-the-model">
-   Step 3: Training the model
+   10.2.3. Step 3: Training the model
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#loss">
-     Loss
+     10.2.3.1. Loss
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#optimizer">
-     Optimizer
+     10.2.3.2. Optimizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-step">
-     Training Step
+     10.2.3.3. Training Step
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#metrics">
-     Metrics
+     10.2.3.4. Metrics
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     Training loop
+     10.2.3.5. Training loop
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#start-model-training">
-     Start model training
+     10.2.3.6. Start model training
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-4-visualize-model-predictions">
-   Step 4: Visualize model predictions
+   10.2.4. Step 4: Visualize model predictions
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-5-using-the-trainer-provided-by-pytorch-lightning">
-   Step 5: Using the
+   10.2.5. Step 5: Using the
    <code class="docutils literal notranslate">
     <span class="pre">
      Trainer
@@ -627,19 +650,19 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#logging">
-     Logging
+     10.2.5.1. Logging
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hooks">
-   Hooks
+   10.2.6. Hooks
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
-   Step 6 (optional): Track the model’s progress using an experiment tracking tool
+   10.2.7. Step 6 (optional): Track the model’s progress using an experiment tracking tool
   </a>
  </li>
 </ul>
@@ -653,7 +676,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="project-2-a-minimal-model-training-experiment">
-<h1>Project 2: A minimal model training experiment<a class="headerlink" href="#project-2-a-minimal-model-training-experiment" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">10.2. </span>Project 2: A minimal model training experiment<a class="headerlink" href="#project-2-a-minimal-model-training-experiment" title="Permalink to this headline">#</a></h1>
 <p><strong>Goal</strong>:</p>
 <ul class="simple">
 <li><p>Create a <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">PyTorch LightningModule</a> named <code class="docutils literal notranslate"><span class="pre">ImageClassifier</span></code> that holds a convolutional network with ResNet18 backbone.</p></li>
@@ -674,10 +697,10 @@ title="Print to PDF"
 <li><p>If you want to use docker to run code in this notebook, <code class="docutils literal notranslate"><span class="pre">pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime</span></code> is a good choice.</p></li>
 </ul>
 <section id="step-1-create-a-model-using-lightningmodule">
-<h2>Step 1: Create a model using <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code><a class="headerlink" href="#step-1-create-a-model-using-lightningmodule" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.1. </span>Step 1: Create a model using <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code><a class="headerlink" href="#step-1-create-a-model-using-lightningmodule" title="Permalink to this headline">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> is a convenient and structured way to implement a PyTorch model, as well as its training and validation behaviors. For more information, please refer to the <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">documentation</a> for <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>.</p>
 <section id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.1.1. </span>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
@@ -817,7 +840,7 @@ Successfully installed Mako-1.2.1 alembic-1.8.1 databricks-cli-0.17.2 docker-5.0
 </div>
 </section>
 <section id="a-simple-image-classifier-module">
-<h3>A simple image classifier module<a class="headerlink" href="#a-simple-image-classifier-module" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.1.2. </span>A simple image classifier module<a class="headerlink" href="#a-simple-image-classifier-module" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
@@ -843,7 +866,7 @@ Successfully installed Mako-1.2.1 alembic-1.8.1 databricks-cli-0.17.2 docker-5.0
 </div>
 </section>
 <section id="testing-the-forward-path-of-the-model">
-<h3>Testing the forward path of the model<a class="headerlink" href="#testing-the-forward-path-of-the-model" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.1.3. </span>Testing the forward path of the model<a class="headerlink" href="#testing-the-forward-path-of-the-model" title="Permalink to this headline">#</a></h3>
 <p>As a trainable function, the model is callable. The model’s forward path (as defined in <code class="docutils literal notranslate"><span class="pre">forward()</span></code>) is the normal execution of the function. We can test this by passing an image to the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -859,7 +882,7 @@ Successfully installed Mako-1.2.1 alembic-1.8.1 databricks-cli-0.17.2 docker-5.0
 </div>
 </div>
 <section id="what-is-a-valid-input">
-<h4>What is a valid input?<a class="headerlink" href="#what-is-a-valid-input" title="Permalink to this headline">#</a></h4>
+<h4><span class="section-number">10.2.1.3.1. </span>What is a valid input?<a class="headerlink" href="#what-is-a-valid-input" title="Permalink to this headline">#</a></h4>
 <p>To test the forward path of the model, we need to pass a valid input. The input should be a tensor of shape <code class="docutils literal notranslate"><span class="pre">(b,</span> <span class="pre">3,</span> <span class="pre">32,</span> <span class="pre">32)</span></code> where <code class="docutils literal notranslate"><span class="pre">b</span></code> is the batch size (an integer).</p>
 <p><strong>Your Task</strong>: Fix the code below to pass the test.</p>
 <p><strong>Tips:</strong> <code class="docutils literal notranslate"><span class="pre">torch.from_numpy()</span></code> can be used to convert a numpy array to a tensor.</p>
@@ -891,7 +914,7 @@ Successfully installed Mako-1.2.1 alembic-1.8.1 databricks-cli-0.17.2 docker-5.0
 </section>
 </section>
 <section id="step-2-prepare-the-dataset-and-data-loader">
-<h2>Step 2: Prepare the dataset and data loader<a class="headerlink" href="#step-2-prepare-the-dataset-and-data-loader" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.2. </span>Step 2: Prepare the dataset and data loader<a class="headerlink" href="#step-2-prepare-the-dataset-and-data-loader" title="Permalink to this headline">#</a></h2>
 <p>You have two choices here and either way would work.</p>
 <ol>
 <li><p>Use the <code class="docutils literal notranslate"><span class="pre">CIFAR10</span></code> dataset class provided by <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>. This is easier.</p>
@@ -930,9 +953,9 @@ Files already downloaded and verified
 </div>
 </section>
 <section id="step-3-training-the-model">
-<h2>Step 3: Training the model<a class="headerlink" href="#step-3-training-the-model" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.3. </span>Step 3: Training the model<a class="headerlink" href="#step-3-training-the-model" title="Permalink to this headline">#</a></h2>
 <section id="loss">
-<h3>Loss<a class="headerlink" href="#loss" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.1. </span>Loss<a class="headerlink" href="#loss" title="Permalink to this headline">#</a></h3>
 <p>A loss is a function that takes the model’s output (also called predictions) and the ground truth (also called “targets”) as input and returns a scalar value. The loss is used as the feedback mechantism to optimize the model.</p>
 <p>For classification, the loss is typically the cross-entropy. Use <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.cross_entropy</span></code> when the model output are logits or <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.nll_loss</span></code> when the outputs are probabilities (a.k.a. softmax). Loss functions can have requirements on the type (<code class="docutils literal notranslate"><span class="pre">dtype</span></code>) of input. <code class="docutils literal notranslate"><span class="pre">cross_entropy</span></code>, for example, expects targets to be “Long” or <code class="docutils literal notranslate"><span class="pre">np.int64</span></code>.</p>
 <p><strong>Your Task</strong>: The following code almost works but there is a bug related to data type. Please fix it.</p>
@@ -973,7 +996,7 @@ Files already downloaded and verified
 </div>
 </section>
 <section id="optimizer">
-<h3>Optimizer<a class="headerlink" href="#optimizer" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.2. </span>Optimizer<a class="headerlink" href="#optimizer" title="Permalink to this headline">#</a></h3>
 <p>The gradient over model parameters (a.k.a. model weights) is computed of the loss function, and informs how the model parameters should be updated. The specifics of how the model is updated is handled by an optimizer.</p>
 <p>An optimizer can be created by passing the model parameters (<code class="docutils literal notranslate"><span class="pre">model.parameters()</span></code>) to the optimizer constructor, as well as learning rate, momentum, and other hyper-parameters. Below is a minimal example of using an optimizer.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
@@ -1007,7 +1030,7 @@ Files already downloaded and verified
 <p>For more details, please refer to <a class="reference external" href="https://pytorch.org/docs/stable/optim.html">the documentation for PyTorch optimizers</a> and <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html">the documentation for <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code></a>.</p>
 </section>
 <section id="training-step">
-<h3>Training Step<a class="headerlink" href="#training-step" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.3. </span>Training Step<a class="headerlink" href="#training-step" title="Permalink to this headline">#</a></h3>
 <p>We can start specifying the training behavior to the model by adding the <code class="docutils literal notranslate"><span class="pre">training_step</span></code> method in the <code class="docutils literal notranslate"><span class="pre">ImageClassifier</span></code> class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1070,7 +1093,7 @@ like this: <code class="docutils literal notranslate"><span class="pre">{'loss':
 </div>
 </section>
 <section id="metrics">
-<h3>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.4. </span>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">#</a></h3>
 <p>A metric is a function that takes the model’s output and the ground truth as input and returns a scalar value. The metric is used to evaluate the model’s performance. It is mainly used to monitor the training progress and does not directly influence the model’s training behavior. However, it can influence model selection and early stopping.</p>
 <p>For classification, the metric is typically the accuracy. We will use <code class="docutils literal notranslate"><span class="pre">torchmetrics.Accuracy</span></code> in this project.</p>
 <div class="cell docutils container">
@@ -1096,7 +1119,7 @@ like this: <code class="docutils literal notranslate"><span class="pre">{'loss':
 </div>
 </section>
 <section id="training-loop">
-<h3>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.5. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">#</a></h3>
 <p>A training loop manages the training process that iteratively passes batches of training examples to the model and running the training step.</p>
 <p>The training steps are organized into “epochs”, where an epoch can be a single pass through the entire training dataset, or it can be simply a predefined number of training steps. At the end of an epoch, the model is used predict on the validation dataset and calculate accuracy metrics.</p>
 <p>To do this, we need to add <code class="docutils literal notranslate"><span class="pre">validation_step</span></code> and <code class="docutils literal notranslate"><span class="pre">validation_epoch_end</span></code> methods and accuracy metrics to the model.</p>
@@ -1140,7 +1163,7 @@ like this: <code class="docutils literal notranslate"><span class="pre">{'loss':
 </div>
 </section>
 <section id="start-model-training">
-<h3>Start model training<a class="headerlink" href="#start-model-training" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.3.6. </span>Start model training<a class="headerlink" href="#start-model-training" title="Permalink to this headline">#</a></h3>
 <p><strong>Your Task</strong>: In the next cells, fill out the details in the training loop implementation. The training loop can be described in pseudo code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">train_step</span> <span class="ow">in</span> <span class="n">train_steps_per_epoch</span><span class="p">:</span>
@@ -1256,7 +1279,7 @@ epoch 5: val loss = 1.62756, accuracy = 0.351
 </section>
 </section>
 <section id="step-4-visualize-model-predictions">
-<h2>Step 4: Visualize model predictions<a class="headerlink" href="#step-4-visualize-model-predictions" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.4. </span>Step 4: Visualize model predictions<a class="headerlink" href="#step-4-visualize-model-predictions" title="Permalink to this headline">#</a></h2>
 <p>Having loss going down and accuracy going up is nice. But to have the peace of mind that the model is working and is indeed better, it is helpful to visualize the model’s predictions.</p>
 <p><strong>Your Task</strong>: Complete the following cells to visualize the model’s predictions.</p>
 <p>First, visualize predictions from a randomly initialized model:</p>
@@ -1330,14 +1353,14 @@ epoch 5: val loss = 1.62756, accuracy = 0.351
 </div>
 </section>
 <section id="step-5-using-the-trainer-provided-by-pytorch-lightning">
-<h2>Step 5: Using the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> provided by Pytorch-Lightning<a class="headerlink" href="#step-5-using-the-trainer-provided-by-pytorch-lightning" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.5. </span>Step 5: Using the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> provided by Pytorch-Lightning<a class="headerlink" href="#step-5-using-the-trainer-provided-by-pytorch-lightning" title="Permalink to this headline">#</a></h2>
 <p>For commonly used computer vision models, it is often enough to the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> provided by Pytorch-Lightning to handle the training loop. This way, you can run model training with just a couple lines of code.</p>
 <section id="logging">
-<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">10.2.5.1. </span>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h3>
 </section>
 </section>
 <section id="hooks">
-<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.6. </span>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
@@ -1461,7 +1484,7 @@ INFO:pytorch_lightning.callbacks.model_summary:
 </div>
 </section>
 <section id="step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool">
-<h2>Step 6 (optional): Track the model’s progress using an experiment tracking tool<a class="headerlink" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">10.2.7. </span>Step 6 (optional): Track the model’s progress using an experiment tracking tool<a class="headerlink" href="#step-6-optional-track-the-model-s-progress-using-an-experiment-tracking-tool" title="Permalink to this headline">#</a></h2>
 <p>Tracking model’s quality during training is made easy by great experiment tracking tools like <code class="docutils literal notranslate"><span class="pre">mlflow</span></code>. With a small change to your training code, we will walk through how to use it to track your model’s progress in learning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1646,6 +1669,13 @@ INFO:pytorch_lightning.callbacks.model_summary:
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="p1_dataset_key.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">10.1. </span>Project 1: Preparing an image dataset for model training</p>
+        </div>
+    </a>
 </div>
             </footer>
         </div>
