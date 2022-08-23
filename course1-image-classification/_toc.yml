@@ -24,3 +24,7 @@ chapters:
   - file: p9_06_few_shot
   - file: p9_07_explain
   - file: p9_08_federated
+- file: keys
+  sections:
+  - file: p1_dataset_key
+  - file: p2_training_key
