@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -231,7 +232,7 @@ const thebe_selector_output = ".output, .cell_output"
              <!-- To handle the deprecated key -->
             
             <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Created at <a href="https://kungfu.ai">KUNGFU.AI</a>
             </div>
             
         </div>
@@ -500,8 +501,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="efficent-data-loading-for-model-training">
 <h1><span class="section-number">3. </span>Efficent Data Loading for Model Training<a class="headerlink" href="#efficent-data-loading-for-model-training" title="Permalink to this headline">#</a></h1>
-<p>Iteration speed is one of the most important factors in the success of experimentation and model training. This is because machine learning is very much an empirical science. Serious researchers and practitioners tend not to make bold claims that certain methods work for all problems. Instead, recipes need to be found for a particular domain, and even a particular dataset.</p>
-<p>Data loading is an important factor for iteration speed. For computer vision problems where you have a non-trivial amount of data, this matters. In this project we will look at the different choices of data loading and the impact on speed (not accuracy, yet).</p>
+<p>Iteration speed is one of the most important factors in the success of a machine learning project. This is because machine learning is very much an empirical science. For a particular domain and a particular dataset, hundreds of iterations may be needed for experimentation before a good recipe is found.</p>
+<p>Data loading can have a big impact on iteration speed, especially for computer vision problems with large amount of data. In this project we will look at the different choices of data loading and the impact on speed (not accuracy, yet).</p>
 <section id="prepare-the-dataset-and-dataloader">
 <h2><span class="section-number">3.1. </span>Prepare the dataset and dataloader<a class="headerlink" href="#prepare-the-dataset-and-dataloader" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
@@ -670,7 +671,7 @@ title="Print to PDF"
 </section>
 <section id="more-complex-image-transforms">
 <h2><span class="section-number">3.3. </span>More Complex Image Transforms<a class="headerlink" href="#more-complex-image-transforms" title="Permalink to this headline">#</a></h2>
-<p>Image transforms and augmentations (we will come back to this in the next project), can levy a big toll on CPU and impact throughput.</p>
+<p>Image transforms and augmentations (we will come back to this in the next project), can levy a big toll on CPU and impact throughput, especially if the image size is large. We resize the images to 200x200 pixels, and add a few more image transformations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: add examples</span>
@@ -685,11 +686,6 @@ title="Print to PDF"
      <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))]</span>
 <span class="p">)</span>
 <span class="n">cifar10_train2</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./cifar10&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Files already downloaded and verified
 </pre></div>
 </div>
 </div>
@@ -708,6 +704,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<p>The throughput dropped by 50%. As an exercise, feel free to try larger image sizes like 512.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profile_scan_throughput</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">cifar10_train2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">15000</span><span class="p">)</span>
@@ -722,49 +719,22 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<p>With more workers, we are able to get the througput back up to roughly the same order of magnitude as before, though not quite there.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bottle neck of data loading</p>
+<p>Even after tuning the concurrency parameter <code class="docutils literal notranslate"><span class="pre">num_workers</span></code>, two types of bottleneck can occur:</p>
+<ul class="simple">
+<li><p><strong>CPU</strong>. When processing large images (e.g. medical images) on a machine where there are few CPU cores compared to GPU (e.g. 8 vCPU cores for a V100), then CPU can be a bottle neck. You will notice this when the GPU utilization is low, but the CPU utilization is near 100%.</p></li>
+<li><p><strong>I/O</strong>. When the network or local hard drive has low bandwidth, both CPU and GPU can be waiting for I/O, and have low utilization.</p></li>
+</ul>
+</div>
 </section>
 <section id="deeper-profiling-using-tensorboard-profiler">
 <h2><span class="section-number">3.4. </span>Deeper Profiling using Tensorboard Profiler<a class="headerlink" href="#deeper-profiling-using-tensorboard-profiler" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install torch_tb_profiler
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
-Requirement already satisfied: torch_tb_profiler in /usr/local/lib/python3.7/dist-packages (0.4.0)
-Requirement already satisfied: tensorboard!=2.1.0,&gt;=1.15 in /usr/local/lib/python3.7/dist-packages (from torch_tb_profiler) (2.8.0)
-Requirement already satisfied: pandas&gt;=1.0.0 in /usr/local/lib/python3.7/dist-packages (from torch_tb_profiler) (1.3.5)
-Requirement already satisfied: numpy&gt;=1.17.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (1.21.6)
-Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (2022.2.1)
-Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.0-&gt;torch_tb_profiler) (2.8.2)
-Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.7/dist-packages (from python-dateutil&gt;=2.7.3-&gt;pandas&gt;=1.0.0-&gt;torch_tb_profiler) (1.15.0)
-Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2.23.0)
-Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.4.6)
-Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.6.1)
-Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.35.0)
-Requirement already satisfied: werkzeug&gt;=0.11.15 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.0.1)
-Requirement already satisfied: grpcio&gt;=1.24.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.47.0)
-Requirement already satisfied: setuptools&gt;=41.0.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (57.4.0)
-Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.8.1)
-Requirement already satisfied: wheel&gt;=0.26 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.37.1)
-Requirement already satisfied: protobuf&gt;=3.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.17.3)
-Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.4.1)
-Requirement already satisfied: absl-py&gt;=0.4 in /usr/local/lib/python3.7/dist-packages (from tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.2.0)
-Requirement already satisfied: cachetools&lt;5.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.2.4)
-Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.9)
-Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.2.8)
-Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.3.1)
-Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.7/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.12.0)
-Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.8.1)
-Requirement already satisfied: typing-extensions&gt;=3.6.4 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (4.1.1)
-Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.7/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (0.4.8)
-Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.0.4)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (1.24.3)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2.10)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (2022.6.15)
-Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard!=2.1.0,&gt;=1.15-&gt;torch_tb_profiler) (3.2.0)
 </pre></div>
 </div>
 </div>
@@ -798,14 +768,6 @@ Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/di
                 <span class="k">break</span>
             <span class="n">train_step</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
             <span class="n">prof</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># Need to call this at the end of each step to notify profiler of steps&#39; boundary.</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/torchvision/models/_utils.py:209: UserWarning: The parameter &#39;pretrained&#39; is deprecated since 0.13 and will be removed in 0.15, please use &#39;weights&#39; instead.
-  f&quot;The parameter &#39;{pretrained_param}&#39; is deprecated since 0.13 and will be removed in 0.15, &quot;
-/usr/local/lib/python3.7/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for &#39;weights&#39; are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=None`.
-  warnings.warn(msg)
 </pre></div>
 </div>
 </div>
