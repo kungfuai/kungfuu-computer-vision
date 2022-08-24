@@ -11,5 +11,4 @@ pytest
 git+https://github.com/zzsi/jupyter-sphinx
 # /Users/zzsi/projects/zz/quantecon-book-theme
 #git+https://github.com/QuantEcon/quantecon-book-theme.git
-# pydata-sphinx-theme
 # other themes: furo

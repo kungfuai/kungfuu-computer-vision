@@ -30,6 +30,7 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  extra_navbar: Created at <a href="https://kungfu.ai">KUNGFU.AI</a>  # Will be displayed underneath the left navbar.
 
 launch_buttons:
   colab_url: "https://colab.research.google.com"
@@ -38,3 +39,6 @@ launch_buttons:
 # sphinx:
 #   config:
 #     html_theme: pydata_sphinx_theme
+#     html_context:
+#       "default_mode": "light"
+
