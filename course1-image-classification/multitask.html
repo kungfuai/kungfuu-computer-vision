@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>9.8. Privacy: Federated Learning for Image Classification &#8212; Evolve model training recipes for image classification</title>
+    <title>9.3. Multi-task Learning for Image Classification &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="10. Keys to Some Projects" href="keys.html" />
-    <link rel="prev" title="9.7. Transparancy: Explaining Model’s Prediction" href="p9_07_explain.html" />
+    <link rel="next" title="9.4. Bayesian Neural Networks for Image Classification" href="bayesian.html" />
+    <link rel="prev" title="9.2.1. Self Supervised Learning and Linear Probing on CIFAR10" href="self_supervised/solo_learn.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -126,32 +126,32 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p4_aug.html">
-   4. Effect of Image Pre-processing and Augmentation
+  <a class="reference internal" href="optimizer.html">
+   4. Effect of Optimizers
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p5_arch.html">
+  <a class="reference internal" href="arch.html">
    5. Effect of Model Architecture
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p6_optimizer.html">
-   6. Effect of Optimizers
+  <a class="reference internal" href="aug.html">
+   6. Effect of Image Pre-processing and Augmentation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p7_loss.html">
+  <a class="reference internal" href="loss.html">
    7. Effect of Loss Function Parameters
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p8_predictor.html">
+  <a class="reference internal" href="predictor.html">
    8. Wrapping up: Image Classifier as a Predictor Service
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="p9.html">
+  <a class="reference internal" href="additional_topics.html">
    9. Optional: Selected topics on image classifiers
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
@@ -161,42 +161,54 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_01_scale.html">
+    <a class="reference internal" href="scale_experiments.html">
      9.1. Efficient Experiments: Scale to Hundreds of Experiments
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="p9_02_self_supervised.html">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="self_supervised.html">
      9.2. Self Supervised Learning as a Pre-train Step for Image Classification
     </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="self_supervised/solo_learn.html">
+       9.2.1. Self Supervised Learning and Linear Probing on CIFAR10
+      </a>
+     </li>
+    </ul>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="p9_03_multitask.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      9.3. Multi-task Learning for Image Classification
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_04_bayesian.html">
+    <a class="reference internal" href="bayesian.html">
      9.4. Bayesian Neural Networks for Image Classification
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_05_unlearn.html">
+    <a class="reference internal" href="unlearn.html">
      9.5. Adversarial Learning: Unlearn Questionable Correlations
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_06_few_shot.html">
+    <a class="reference internal" href="few_shot.html">
      9.6. Few Shot Learning: Cope with Small Data
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_07_explain.html">
+    <a class="reference internal" href="explain.html">
      9.7. Transparancy: Explaining Model’s Prediction
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="federated.html">
      9.8. Privacy: Federated Learning for Image Classification
     </a>
    </li>
@@ -206,8 +218,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="keys.html">
    10. Keys to Some Projects
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -275,6 +287,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/multitask.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -314,7 +355,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fp9_08_federated.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fmultitask.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -342,7 +383,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/p9_08_federated.ipynb"
+        <a href="_sources/multitask.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -391,7 +432,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Privacy: Federated Learning for Image Classification</h1>
+                <h1>Multi-task Learning for Image Classification</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -403,8 +444,12 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="privacy-federated-learning-for-image-classification">
-<h1><span class="section-number">9.8. </span>Privacy: Federated Learning for Image Classification<a class="headerlink" href="#privacy-federated-learning-for-image-classification" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="multi-task-learning-for-image-classification">
+<h1><span class="section-number">9.3. </span>Multi-task Learning for Image Classification<a class="headerlink" href="#multi-task-learning-for-image-classification" title="Permalink to this headline">#</a></h1>
+<p>Topics:</p>
+<ul class="simple">
+<li><p>When does multi-task help with image classification?</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -434,17 +479,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="p9_07_explain.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="self_supervised/solo_learn.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">9.7. </span>Transparancy: Explaining Model’s Prediction</p>
+            <p class="prev-next-title"><span class="section-number">9.2.1. </span>Self Supervised Learning and Linear Probing on CIFAR10</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="keys.html" title="next page">
+    <a class='right-next' id="next-link" href="bayesian.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">10. </span>Keys to Some Projects</p>
+        <p class="prev-next-title"><span class="section-number">9.4. </span>Bayesian Neural Networks for Image Classification</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

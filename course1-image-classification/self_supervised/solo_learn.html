@@ -1,0 +1,1248 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>9.2.1. Self Supervised Learning and Linear Probing on CIFAR10 &#8212; Evolve model training recipes for image classification</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9.3. Multi-task Learning for Image Classification" href="../multitask.html" />
+    <link rel="prev" title="9.2. Self Supervised Learning as a Pre-train Step for Image Classification" href="../self_supervised.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Evolve model training recipes for image classification</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../p1_dataset.html">
+   1. Preparing an Image Dataset for Model Training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../p2_training.html">
+   2. A Minimal Model Training Experiment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../p3_dataloader.html">
+   3. Efficent Data Loading for Model Training
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimizer.html">
+   4. Effect of Optimizers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../arch.html">
+   5. Effect of Model Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../aug.html">
+   6. Effect of Image Pre-processing and Augmentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../loss.html">
+   7. Effect of Loss Function Parameters
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictor.html">
+   8. Wrapping up: Image Classifier as a Predictor Service
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../additional_topics.html">
+   9. Optional: Selected topics on image classifiers
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../scale_experiments.html">
+     9.1. Efficient Experiments: Scale to Hundreds of Experiments
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../self_supervised.html">
+     9.2. Self Supervised Learning as a Pre-train Step for Image Classification
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       9.2.1. Self Supervised Learning and Linear Probing on CIFAR10
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../multitask.html">
+     9.3. Multi-task Learning for Image Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bayesian.html">
+     9.4. Bayesian Neural Networks for Image Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../unlearn.html">
+     9.5. Adversarial Learning: Unlearn Questionable Correlations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../few_shot.html">
+     9.6. Few Shot Learning: Cope with Small Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../explain.html">
+     9.7. Transparancy: Explaining Model’s Prediction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../federated.html">
+     9.8. Privacy: Federated Learning for Image Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../keys.html">
+   10. Keys to Some Projects
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../p1_dataset_key.html">
+     10.1. Project 1: Preparing an image dataset for model training
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../p2_training_key.html">
+     10.2. Project 2: A minimal model training experiment
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Created at <a href="https://kungfu.ai">KUNGFU.AI</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/self_supervised/solo_learn.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fself_supervised/solo_learn.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/self_supervised/solo_learn.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   9.2.1.1. Install
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#listing-ssl-methods">
+   9.2.1.2. Listing SSL Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mocov3">
+   9.2.1.3. MOCOV3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-architecture">
+   9.2.1.4. Model architecture
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   9.2.1.5. Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-logging-and-callbacks">
+   9.2.1.6. Set up Logging and Callbacks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   9.2.1.7. Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   9.2.1.8. References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Self Supervised Learning and Linear Probing on CIFAR10</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install">
+   9.2.1.1. Install
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#listing-ssl-methods">
+   9.2.1.2. Listing SSL Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mocov3">
+   9.2.1.3. MOCOV3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-architecture">
+   9.2.1.4. Model architecture
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   9.2.1.5. Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-logging-and-callbacks">
+   9.2.1.6. Set up Logging and Callbacks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   9.2.1.7. Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   9.2.1.8. References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="self-supervised-learning-and-linear-probing-on-cifar10">
+<h1><span class="section-number">9.2.1. </span>Self Supervised Learning and Linear Probing on CIFAR10<a class="headerlink" href="#self-supervised-learning-and-linear-probing-on-cifar10" title="Permalink to this headline">#</a></h1>
+<p>In this notebook, we use the MOCOV3 method to train a model in a self-supervised learning (SSL) fashion, and evaluate the model by the classification accuracy of linear probing. We use the <code class="docutils literal notranslate"><span class="pre">solo_learn</span></code> library <a class="footnote-reference brackets" href="#footcite-sololearn" id="id1">1</a> (alternatives: <code class="docutils literal notranslate"><span class="pre">VISSL</span></code>, <code class="docutils literal notranslate"><span class="pre">lightly</span></code>) which has a good coverage of recent self-supervised learning algorithms.</p>
+<section id="install">
+<h2><span class="section-number">9.2.1.1. </span>Install<a class="headerlink" href="#install" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pip-installing solo_learn 1.0.2 requires torch 1.9 and uninstalls newer verions.</span>
+<span class="c1">#     This seems unnecessary and causes other problems.</span>
+<span class="c1"># !pip install solo_learn==1.0.2 </span>
+<span class="c1">#</span>
+<span class="c1"># Instead, install directly from the repo:</span>
+<span class="c1"># https://github.com/vturrisi/solo-learn/commit/601920489cc464e77835be6c1e5b883b98293c20</span>
+<span class="o">!</span>pip install git+https://github.com/vturrisi/solo-learn.git@601920489cc464e77835be6c1e5b883b98293c20
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="listing-ssl-methods">
+<h2><span class="section-number">9.2.1.2. </span>Listing SSL Methods<a class="headerlink" href="#listing-ssl-methods" title="Permalink to this headline">#</a></h2>
+<p>Here is a list of SSL methods provided by <code class="docutils literal notranslate"><span class="pre">solo-learn</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of SSL methods:</span>
+<span class="kn">import</span> <span class="nn">solo.methods</span>
+<span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">solo</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">__all__</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Base&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;BarlowTwins&#39;,
+ &#39;BYOL&#39;,
+ &#39;DeepClusterV2&#39;,
+ &#39;DINO&#39;,
+ &#39;MAE&#39;,
+ &#39;LinearModel&#39;,
+ &#39;MoCoV2Plus&#39;,
+ &#39;MoCoV3&#39;,
+ &#39;NNBYOL&#39;,
+ &#39;NNCLR&#39;,
+ &#39;NNSiam&#39;,
+ &#39;ReSSL&#39;,
+ &#39;SimCLR&#39;,
+ &#39;SimSiam&#39;,
+ &#39;SupCon&#39;,
+ &#39;SwAV&#39;,
+ &#39;VIbCReg&#39;,
+ &#39;VICReg&#39;,
+ &#39;WMSE&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mocov3">
+<h2><span class="section-number">9.2.1.3. </span>MOCOV3<a class="headerlink" href="#mocov3" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">solo.methods</span> <span class="kn">import</span> <span class="n">BarlowTwins</span><span class="p">,</span> <span class="n">MoCoV3</span>
+<span class="kn">from</span> <span class="nn">solo.utils.checkpointer</span> <span class="kn">import</span> <span class="n">Checkpointer</span>
+
+<span class="kn">from</span> <span class="nn">solo.data.pretrain_dataloader</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">prepare_dataloader</span><span class="p">,</span>
+    <span class="n">prepare_datasets</span><span class="p">,</span>
+    <span class="n">prepare_n_crop_transform</span><span class="p">,</span>
+    <span class="n">prepare_transform</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ssl_method_class</span> <span class="o">=</span> <span class="n">MoCoV3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A self supervised learning <code class="docutils literal notranslate"><span class="pre">Method</span></code> in <code class="docutils literal notranslate"><span class="pre">solo-learn</span></code> is a pytorch <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>. To see this, let’s print out the method resolution order (MRO):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ssl_method_class</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[solo.methods.mocov3.MoCoV3,
+ solo.methods.base.BaseMomentumMethod,
+ solo.methods.base.BaseMethod,
+ pytorch_lightning.core.lightning.LightningModule,
+ pytorch_lightning.core.mixins.device_dtype_mixin.DeviceDtypeModuleMixin,
+ pytorch_lightning.core.mixins.hparams_mixin.HyperparametersMixin,
+ pytorch_lightning.core.saving.ModelIO,
+ pytorch_lightning.core.hooks.ModelHooks,
+ pytorch_lightning.core.hooks.DataHooks,
+ pytorch_lightning.core.hooks.CheckpointHooks,
+ torch.nn.modules.module.Module,
+ object]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># common parameters for all methods</span>
+<span class="c1"># some parameters for extra functionally are missing, but don&#39;t mind this for now.</span>
+<span class="n">base_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;backbone&quot;</span><span class="p">:</span> <span class="s2">&quot;resnet18&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;cifar&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;zero_init_residual&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;max_epochs&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;sgd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lars&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s2">&quot;gpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grad_clip_lars&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.00001</span><span class="p">,</span>
+    <span class="s2">&quot;classifier_lr&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;exclude_bias_n_norm_lars&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;accumulate_grad_batches&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;extra_optimizer_args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;momentum&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},</span>
+    <span class="s2">&quot;scheduler&quot;</span><span class="p">:</span> <span class="s2">&quot;warmup_cosine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;min_lr&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;warmup_start_lr&quot;</span><span class="p">:</span> <span class="mf">0.003</span><span class="p">,</span>
+    <span class="s2">&quot;warmup_epochs&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;num_crops_per_aug&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s2">&quot;num_large_crops&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;num_small_crops&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;eta_lars&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>
+    <span class="s2">&quot;lr_decay_steps&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;dali_device&quot;</span><span class="p">:</span> <span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+    <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;data_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;/data/datasets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;train_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;cifar10/train&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;val_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;cifar10/val&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="s2">&quot;cifar10&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;barlow-cifar10&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># barlow specific parameters</span>
+<span class="c1"># method_kwargs = {</span>
+<span class="c1">#     &quot;proj_hidden_dim&quot;: 2048,</span>
+<span class="c1">#     &quot;proj_output_dim&quot;: 2048,</span>
+<span class="c1">#     &quot;lamb&quot;: 5e-3,</span>
+<span class="c1">#     &quot;scale_loss&quot;: 0.025,</span>
+<span class="c1">#     &quot;backbone_args&quot;: {&quot;cifar&quot;: True, &quot;zero_init_residual&quot;: False},</span>
+<span class="c1"># }</span>
+
+<span class="c1"># mocov3 specific params</span>
+<span class="n">method_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;exclude_bias_n_norm_lars&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;classifier_lr&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;warmup_start_lr&quot;</span><span class="p">:</span> <span class="mf">3e-5</span><span class="p">,</span>
+    <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
+    <span class="s2">&quot;min_scale&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;crop_size&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="s2">&quot;proj_hidden_dim&quot;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+    <span class="s2">&quot;proj_output_dim&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+    <span class="s2">&quot;pred_hidden_dim&quot;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;base_tau_momentum&quot;</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span>
+    <span class="s2">&quot;final_tau_momentum&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;momentum_classifier&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;unique_augs&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;backbone_args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;cifar&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;zero_init_residual&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+<span class="p">}</span>
+
+
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">base_kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">method_kwargs</span><span class="p">}</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ssl_method_class</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:root:Using scheduler_interval=step might generate issues when resuming a checkpoint.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-architecture">
+<h2><span class="section-number">9.2.1.4. </span>Model architecture<a class="headerlink" href="#model-architecture" title="Permalink to this headline">#</a></h2>
+<p>Notice the classifier and projector sub-modules.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MoCoV3(
+  (backbone): ResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), bias=False)
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(inplace=True)
+    (maxpool): Identity()
+    (layer1): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    (fc): Identity()
+  )
+  (classifier): Linear(in_features=512, out_features=10, bias=True)
+  (momentum_backbone): ResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), bias=False)
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(inplace=True)
+    (maxpool): Identity()
+    (layer1): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    (fc): Identity()
+  )
+  (projector): Sequential(
+    (0): Linear(in_features=512, out_features=4096, bias=False)
+    (1): BatchNorm1d(4096, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+    (3): Linear(in_features=4096, out_features=256, bias=False)
+    (4): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=True)
+  )
+  (momentum_projector): Sequential(
+    (0): Linear(in_features=512, out_features=4096, bias=False)
+    (1): BatchNorm1d(4096, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+    (3): Linear(in_features=4096, out_features=256, bias=False)
+    (4): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=True)
+  )
+  (predictor): Sequential(
+    (0): Linear(in_features=256, out_features=4096, bias=False)
+    (1): BatchNorm1d(4096, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+    (3): Linear(in_features=4096, out_features=256, bias=False)
+  )
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataset">
+<h2><span class="section-number">9.2.1.5. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we first prepare our single transformation pipeline</span>
+<span class="n">transform_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;brightness&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="s2">&quot;contrast&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="s2">&quot;saturation&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="s2">&quot;hue&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="s2">&quot;gaussian_prob&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;solarization_prob&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;color_jitter_prob&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;gray_scale_prob&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;min_scale&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;max_scale&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="p">[</span><span class="n">prepare_transform</span><span class="p">(</span><span class="s2">&quot;cifar10&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">transform_kwargs</span><span class="p">)]</span>
+
+<span class="c1"># then, we wrap the pipepline using this utility function</span>
+<span class="c1"># to make it produce an arbitrary number of crops</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">prepare_n_crop_transform</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">num_crops_per_aug</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># finally, we produce the Dataset/Dataloader classes</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">prepare_datasets</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;cifar10&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+    <span class="n">no_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">prepare_dataloader</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">base_kwargs</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">],</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">base_kwargs</span><span class="p">[</span><span class="s2">&quot;num_workers&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Files already downloaded and verified
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one_example</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># (idx, [image_tensor1, image_tensor2, integer class idx])</span>
+<span class="n">one_example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0,
+ [tensor([[[-0.4653, -0.4653, -0.4653,  ..., -0.2430, -0.2430, -0.2907],
+           [-0.4018, -0.4177, -0.4335,  ..., -0.3542, -0.4177, -0.5129],
+           [-0.2907, -0.3383, -0.3542,  ..., -0.4653, -0.5764, -0.7193],
+           ...,
+           [-0.3859, -0.3542, -0.2589,  ..., -0.2589, -0.0208,  0.3920],
+           [-0.2271, -0.2748, -0.2748,  ..., -0.2748,  0.0110,  0.5349],
+           [ 0.0110, -0.1160, -0.1954,  ..., -0.4653, -0.2430,  0.3603]],
+  
+          [[-1.2395, -1.2234, -1.2072,  ..., -1.0301, -1.0301, -1.0301],
+           [-1.2072, -1.2072, -1.2072,  ..., -1.1106, -1.1589, -1.2072],
+           [-1.1428, -1.1428, -1.1428,  ..., -1.1750, -1.2556, -1.3361],
+           ...,
+           [-1.1911, -1.1589, -1.0784,  ..., -1.0623, -0.8690, -0.4825],
+           [-1.1428, -1.2072, -1.1428,  ..., -0.9979, -0.7563, -0.2732],
+           [-1.0140, -1.0784, -1.0945,  ..., -1.0301, -0.8690, -0.3537]],
+  
+          [[-0.9573, -0.9723, -0.9573,  ..., -0.7924, -0.7924, -0.7924],
+           [-0.9123, -0.9273, -0.9723,  ..., -0.8673, -0.9273, -0.9573],
+           [-0.8823, -0.8823, -0.8823,  ..., -0.9273, -1.0022, -1.0622],
+           ...,
+           [-0.9573, -0.8973, -0.8224,  ..., -0.8523, -0.6724, -0.3876],
+           [-1.0022, -1.0172, -0.9273,  ..., -0.8074, -0.6125, -0.2077],
+           [-1.0172, -1.0172, -0.9273,  ..., -0.8673, -0.7174, -0.2827]]]),
+  tensor([[[-1.1601e-01,  2.3328e-01,  7.2546e-01,  ...,  1.4558e+00,
+             1.4558e+00,  1.4558e+00],
+           [-2.9066e-01,  2.1740e-01,  6.4607e-01,  ...,  1.0906e+00,
+             1.0430e+00,  9.4773e-01],
+           [-3.0653e-01,  2.4915e-01,  6.1432e-01,  ...,  7.5721e-01,
+             6.1432e-01,  4.3968e-01],
+           ...,
+           [ 7.2546e-01,  7.2546e-01,  1.9321e+00,  ...,  2.9679e-01,
+             3.6029e-01,  3.2854e-01],
+           [ 5.8257e-01,  9.1598e-01,  1.6781e+00,  ...,  2.9679e-01,
+             5.1906e-01,  5.8257e-01],
+           [ 4.5555e-01,  1.1065e+00,  1.1700e+00,  ...,  1.3802e-01,
+             4.5555e-01,  6.7783e-01]],
+  
+          [[-5.9526e-01, -2.4095e-01,  1.2947e-01,  ...,  9.0251e-01,
+             9.5082e-01,  9.8303e-01],
+           [-9.3346e-01, -4.0200e-01,  6.2811e-04,  ...,  4.1936e-01,
+             4.1936e-01,  3.5494e-01],
+           [-1.1106e+00, -4.6642e-01, -1.1211e-01,  ...,  4.8943e-02,
+            -7.9897e-02, -2.5705e-01],
+           ...,
+           [-1.7653e-01, -6.3792e-02,  1.3534e+00,  ..., -3.8589e-01,
+            -2.4095e-01, -2.2484e-01],
+           [-3.0537e-01,  1.2947e-01,  1.0475e+00,  ...,  1.7778e-01,
+             2.5831e-01,  2.7441e-01],
+           [-3.6979e-01,  3.8715e-01,  5.3209e-01,  ...,  4.0325e-01,
+             5.8041e-01,  5.8041e-01]],
+  
+          [[-9.7226e-01, -8.2235e-01, -5.5252e-01,  ...,  2.5698e-01,
+             3.3193e-01,  4.0689e-01],
+           [-1.4520e+00, -1.1372e+00, -8.9731e-01,  ..., -3.5764e-01,
+            -2.9768e-01, -3.1267e-01],
+           [-1.7068e+00, -1.3470e+00, -1.1671e+00,  ..., -8.6732e-01,
+            -9.4228e-01, -1.0472e+00],
+           ...,
+           [-1.1821e+00, -1.1671e+00,  3.3193e-01,  ..., -1.4070e+00,
+            -1.2871e+00, -1.1821e+00],
+           [-1.2871e+00, -8.9731e-01,  1.2206e-01,  ..., -1.3920e+00,
+            -1.2421e+00, -1.1372e+00],
+           [-1.3770e+00, -6.4246e-01, -3.7263e-01,  ..., -1.4819e+00,
+            -1.4070e+00, -1.3470e+00]]])],
+ 6)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-up-logging-and-callbacks">
+<h2><span class="section-number">9.2.1.6. </span>Set up Logging and Callbacks<a class="headerlink" href="#set-up-logging-and-callbacks" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
+
+<span class="n">use_wandb_logger</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">if</span> <span class="n">use_wandb_logger</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
+
+  <span class="n">logger</span> <span class="o">=</span> <span class="n">WandbLogger</span><span class="p">(</span>
+      <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ssl_method_class</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">-cifar10&quot;</span><span class="p">,</span>  <span class="c1"># name of the experiment</span>
+      <span class="n">project</span><span class="o">=</span><span class="s2">&quot;self-supervised&quot;</span><span class="p">,</span>  <span class="c1"># name of the wandb project</span>
+      <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">offline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s2">&quot;gradients&quot;</span><span class="p">,</span> <span class="n">log_freq</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">TensorBoardLogger</span><span class="p">,</span> <span class="n">CSVLogger</span>
+
+  <span class="c1"># logger = TensorBoardLogger(&quot;tb_logs&quot;, name=&quot;self_supervised&quot;)</span>
+  <span class="n">logger</span> <span class="o">=</span> <span class="n">CSVLogger</span><span class="p">(</span><span class="s2">&quot;csv_logs&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;self_supervised&quot;</span><span class="p">)</span>
+
+<span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># automatically log our learning rate</span>
+<span class="n">lr_monitor</span> <span class="o">=</span> <span class="n">LearningRateMonitor</span><span class="p">(</span><span class="n">logging_interval</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">)</span>
+<span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lr_monitor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training">
+<h2><span class="section-number">9.2.1.7. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">solo.data.classification_dataloader</span> <span class="kn">import</span> <span class="n">prepare_data</span> <span class="k">as</span> <span class="n">prepare_data_classification</span>
+
+<span class="c1"># we will also create a validation dataloader to automatically</span>
+<span class="c1"># check how well our models is doing in an online fashion.</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">val_loader</span> <span class="o">=</span> <span class="n">prepare_data_classification</span><span class="p">(</span>
+    <span class="s2">&quot;cifar10&quot;</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">base_kwargs</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">],</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="n">base_kwargs</span><span class="p">[</span><span class="s2">&quot;num_workers&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.plugins</span> <span class="kn">import</span> <span class="n">DDPPlugin</span>
+
+
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span>
+    <span class="n">args</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+    <span class="n">checkpoint_callback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">terminate_on_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+    <span class="c1"># If you like to use the DDP accelerater, don&#39;t do it in the jupyter notebook, as</span>
+    <span class="c1">#   the following error would occur:</span>
+    <span class="c1"># MisconfigurationException: `Trainer(strategy=&#39;ddp&#39;)` or `Trainer(accelerator=&#39;ddp&#39;)` is not compatible with an interactive environment. Run your code as a script, or choose one of the compatible strategies: Trainer(strategy=None|dp|tpu_spawn). In case you are spawning processes yourself, make sure to include the Trainer creation inside the worker function.</span>
+    <span class="c1"># plugins=DDPPlugin(find_unused_parameters=True),</span>
+    <span class="c1"># accelerator=&quot;ddp&quot;,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">use_wandb_logger</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">os</span>
+  <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+  <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+  <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+  <span class="n">versions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;version_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;csv_logs/self_supervised/&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;version&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+  <span class="n">latest_version</span> <span class="o">=</span> <span class="n">versions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;csv_logs/self_supervised/version_</span><span class="si">{</span><span class="n">latest_version</span><span class="si">}</span><span class="s2">/metrics.csv&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+  <span class="n">df</span> <span class="o">=</span> <span class="n">metrics</span><span class="p">[[</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span> <span class="s2">&quot;val_acc1&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">metric_name</span><span class="o">=</span><span class="s2">&quot;val_acc1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;val_acc1&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;any&quot;</span><span class="p">)</span>
+  <span class="c1"># print(df)</span>
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">metrics</span><span class="p">[[</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span> <span class="s2">&quot;train_acc1_epoch&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;train_acc1_epoch&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">metric_name</span><span class="o">=</span><span class="s2">&quot;train_acc1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;any&quot;</span><span class="p">)])</span>
+  <span class="c1"># print(df)</span>
+  <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;metric_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">trainer</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/solo_learn_20_0.png" src="../_images/solo_learn_20_0.png" />
+</div>
+</div>
+</section>
+<section id="references">
+<h2><span class="section-number">9.2.1.8. </span>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<div class="docutils container" id="id2">
+<dl class="footnote brackets">
+<dt class="label" id="footcite-sololearn"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Victor G. Turrisi da Costa, Enrico Fini, Moin Nabi, Nicu Sebe, and Elisa Ricci. Solo-learn: a library of self-supervised methods for visual representation learning. 2021. URL: <a class="reference external" href="https://arxiv.org/abs/2108.01775">https://arxiv.org/abs/2108.01775</a>, <a class="reference external" href="https://doi.org/10.48550/ARXIV.2108.01775">doi:10.48550/ARXIV.2108.01775</a>.</p>
+</dd>
+</dl>
+</div>
+<hr class="footnotes docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./self_supervised"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../self_supervised.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">9.2. </span>Self Supervised Learning as a Pre-train Step for Image Classification</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../multitask.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9.3. </span>Multi-task Learning for Image Classification</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By KUNGFU.AI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

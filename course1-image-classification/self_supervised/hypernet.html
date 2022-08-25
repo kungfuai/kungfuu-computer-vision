@@ -6,55 +6,53 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>9.5. Adversarial Learning: Unlearn Questionable Correlations &#8212; Evolve model training recipes for image classification</title>
+    <title>HyperNets for Image Classification &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9.6. Few Shot Learning: Cope with Small Data" href="p9_06_few_shot.html" />
-    <link rel="prev" title="9.4. Bayesian Neural Networks for Image Classification" href="p9_04_bayesian.html" />
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -89,14 +87,14 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="bd-sidebar noprint" id="site-navigation">
     <div class="bd-sidebar__content">
         <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+    <a class="navbar-brand text-wrap" href="../index.html">
       
       
       
       <h1 class="site-logo" id="site-title">Evolve model training recipes for image classification</h1>
       
     </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -104,121 +102,133 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
+                <a class="reference internal" href="../intro.html">
                     Introduction
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="p1_dataset.html">
+  <a class="reference internal" href="../p1_dataset.html">
    1. Preparing an Image Dataset for Model Training
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p2_training.html">
+  <a class="reference internal" href="../p2_training.html">
    2. A Minimal Model Training Experiment
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p3_dataloader.html">
+  <a class="reference internal" href="../p3_dataloader.html">
    3. Efficent Data Loading for Model Training
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p4_aug.html">
-   4. Effect of Image Pre-processing and Augmentation
+  <a class="reference internal" href="../optimizer.html">
+   4. Effect of Optimizers
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p5_arch.html">
+  <a class="reference internal" href="../arch.html">
    5. Effect of Model Architecture
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p6_optimizer.html">
-   6. Effect of Optimizers
+  <a class="reference internal" href="../aug.html">
+   6. Effect of Image Pre-processing and Augmentation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p7_loss.html">
+  <a class="reference internal" href="../loss.html">
    7. Effect of Loss Function Parameters
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p8_predictor.html">
+  <a class="reference internal" href="../predictor.html">
    8. Wrapping up: Image Classifier as a Predictor Service
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="p9.html">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../additional_topics.html">
    9. Optional: Selected topics on image classifiers
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_01_scale.html">
+    <a class="reference internal" href="../scale_experiments.html">
      9.1. Efficient Experiments: Scale to Hundreds of Experiments
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="p9_02_self_supervised.html">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../self_supervised.html">
      9.2. Self Supervised Learning as a Pre-train Step for Image Classification
     </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="solo_learn.html">
+       9.2.1. Self Supervised Learning and Linear Probing on CIFAR10
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_03_multitask.html">
+    <a class="reference internal" href="../multitask.html">
      9.3. Multi-task Learning for Image Classification
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_04_bayesian.html">
+    <a class="reference internal" href="../bayesian.html">
      9.4. Bayesian Neural Networks for Image Classification
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../unlearn.html">
      9.5. Adversarial Learning: Unlearn Questionable Correlations
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_06_few_shot.html">
+    <a class="reference internal" href="../few_shot.html">
      9.6. Few Shot Learning: Cope with Small Data
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_07_explain.html">
+    <a class="reference internal" href="../explain.html">
      9.7. Transparancy: Explaining Model’s Prediction
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_08_federated.html">
+    <a class="reference internal" href="../federated.html">
      9.8. Privacy: Federated Learning for Image Classification
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="keys.html">
+  <a class="reference internal" href="../keys.html">
    10. Keys to Some Projects
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="p1_dataset_key.html">
+    <a class="reference internal" href="../p1_dataset_key.html">
      10.1. Project 1: Preparing an image dataset for model training
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p2_training_key.html">
+    <a class="reference internal" href="../p2_training_key.html">
      10.2. Project 2: A minimal model training experiment
     </a>
    </li>
@@ -314,7 +324,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fp9_05_unlearn.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fself_supervised/hypernet.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -342,7 +352,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/p9_05_unlearn.ipynb"
+        <a href="../_sources/self_supervised/hypernet.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -391,7 +401,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Adversarial Learning: Unlearn Questionable Correlations</h1>
+                <h1>HyperNets for Image Classification</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -403,8 +413,12 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="adversarial-learning-unlearn-questionable-correlations">
-<h1><span class="section-number">9.5. </span>Adversarial Learning: Unlearn Questionable Correlations<a class="headerlink" href="#adversarial-learning-unlearn-questionable-correlations" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="hypernets-for-image-classification">
+<h1>HyperNets for Image Classification<a class="headerlink" href="#hypernets-for-image-classification" title="Permalink to this headline">#</a></h1>
+<p>Topics:</p>
+<ul class="simple">
+<li><p>GNN-based Hypernet</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -420,7 +434,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./."
+            path: "./self_supervised"
         },
         predefinedOutput: true
     }
@@ -434,20 +448,6 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="p9_04_bayesian.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">9.4. </span>Bayesian Neural Networks for Image Classification</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="p9_06_few_shot.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">9.6. </span>Few Shot Learning: Cope with Small Data</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             </footer>
         </div>
@@ -469,7 +469,7 @@ title="Print to PDF"
     </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
 
   </body>

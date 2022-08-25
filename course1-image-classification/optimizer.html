@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>6. Effect of Optimizers &#8212; Evolve model training recipes for image classification</title>
+    <title>4. Effect of Optimizers &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7. Effect of Loss Function Parameters" href="p7_loss.html" />
-    <link rel="prev" title="5. Effect of Model Architecture" href="p5_arch.html" />
+    <link rel="next" title="5. Effect of Model Architecture" href="arch.html" />
+    <link rel="prev" title="3. Efficent Data Loading for Model Training" href="p3_dataloader.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -125,33 +125,33 @@ const thebe_selector_output = ".output, .cell_output"
    3. Efficent Data Loading for Model Training
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="p4_aug.html">
-   4. Effect of Image Pre-processing and Augmentation
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. Effect of Optimizers
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p5_arch.html">
+  <a class="reference internal" href="arch.html">
    5. Effect of Model Architecture
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   6. Effect of Optimizers
+ <li class="toctree-l1">
+  <a class="reference internal" href="aug.html">
+   6. Effect of Image Pre-processing and Augmentation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p7_loss.html">
+  <a class="reference internal" href="loss.html">
    7. Effect of Loss Function Parameters
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="p8_predictor.html">
+  <a class="reference internal" href="predictor.html">
    8. Wrapping up: Image Classifier as a Predictor Service
   </a>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="p9.html">
+  <a class="reference internal" href="additional_topics.html">
    9. Optional: Selected topics on image classifiers
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
@@ -161,42 +161,54 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_01_scale.html">
+    <a class="reference internal" href="scale_experiments.html">
      9.1. Efficient Experiments: Scale to Hundreds of Experiments
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="p9_02_self_supervised.html">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="self_supervised.html">
      9.2. Self Supervised Learning as a Pre-train Step for Image Classification
     </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="self_supervised/solo_learn.html">
+       9.2.1. Self Supervised Learning and Linear Probing on CIFAR10
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_03_multitask.html">
+    <a class="reference internal" href="multitask.html">
      9.3. Multi-task Learning for Image Classification
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_04_bayesian.html">
+    <a class="reference internal" href="bayesian.html">
      9.4. Bayesian Neural Networks for Image Classification
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_05_unlearn.html">
+    <a class="reference internal" href="unlearn.html">
      9.5. Adversarial Learning: Unlearn Questionable Correlations
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_06_few_shot.html">
+    <a class="reference internal" href="few_shot.html">
      9.6. Few Shot Learning: Cope with Small Data
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_07_explain.html">
+    <a class="reference internal" href="explain.html">
      9.7. Transparancy: Explaining Model’s Prediction
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="p9_08_federated.html">
+    <a class="reference internal" href="federated.html">
      9.8. Privacy: Federated Learning for Image Classification
     </a>
    </li>
@@ -206,8 +218,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="keys.html">
    10. Keys to Some Projects
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -283,7 +295,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/p6_optimizer.ipynb"
+        <a href="https://colab.research.google.com/github/kungfuai/kungfuu-computer-vision/blob/main/course1-image-classification/optimizer.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -343,7 +355,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Fp6_optimizer.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/kungfuai/kungfuu-computer-vision/issues/new?title=Issue%20on%20page%20%2Foptimizer.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -371,7 +383,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/p6_optimizer.ipynb"
+        <a href="_sources/optimizer.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -433,7 +445,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="effect-of-optimizers">
-<h1><span class="section-number">6. </span>Effect of Optimizers<a class="headerlink" href="#effect-of-optimizers" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">4. </span>Effect of Optimizers<a class="headerlink" href="#effect-of-optimizers" title="Permalink to this headline">#</a></h1>
 <p>Topics:</p>
 <ul class="simple">
 <li><p>optimizer type: SGD, Adam</p></li>
@@ -480,17 +492,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="p5_arch.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="p3_dataloader.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">5. </span>Effect of Model Architecture</p>
+            <p class="prev-next-title"><span class="section-number">3. </span>Efficent Data Loading for Model Training</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="p7_loss.html" title="next page">
+    <a class='right-next' id="next-link" href="arch.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Effect of Loss Function Parameters</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Effect of Model Architecture</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
