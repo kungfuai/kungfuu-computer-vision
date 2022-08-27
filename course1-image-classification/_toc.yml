@@ -10,6 +10,8 @@ chapters:
 - file: p2_training
 - file: p3_dataloader
 - file: optimizer
+  sections:
+  - file: initialization
 - file: arch
 - file: aug
 - file: loss

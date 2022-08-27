@@ -4,3 +4,5 @@
 **tar.gz
 course1-image-classification/cifar-10-batches-py
 course1-image-classification/cifar10
+course1-image-classification/data/
+**/csv_logs/
