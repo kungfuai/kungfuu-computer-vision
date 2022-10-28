@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Effect of Optimizers &#8212; Evolve model training recipes for image classification</title>
+    <title>4.2. Effect of Optimizers &#8212; Evolve model training recipes for image classification</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. Effect of Model Architecture" href="arch.html" />
-    <link rel="prev" title="3. Efficent Data Loading for Model Training" href="p3_dataloader.html" />
+    <link rel="prev" title="4.1. Initialization of Model Weights" href="initialization.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -125,10 +125,27 @@ const thebe_selector_output = ".output, .cell_output"
    3. Efficent Data Loading for Model Training
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   4. Effect of Optimizers
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="network_weights.html">
+   4. Knobs for Network Weights: Initialization and Optimizers
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="initialization.html">
+     4.1. Initialization of Model Weights
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4.2. Effect of Optimizers
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="arch.html">
@@ -154,8 +171,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="additional_topics.html">
    9. Optional: Selected topics on image classifiers
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -169,8 +186,8 @@ const thebe_selector_output = ".output, .cell_output"
     <a class="reference internal" href="self_supervised.html">
      9.2. Self Supervised Learning as a Pre-train Step for Image Classification
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -218,8 +235,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="keys.html">
    10. Keys to Some Projects
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -445,23 +462,21 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="effect-of-optimizers">
-<h1><span class="section-number">4. </span>Effect of Optimizers<a class="headerlink" href="#effect-of-optimizers" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">4.2. </span>Effect of Optimizers<a class="headerlink" href="#effect-of-optimizers" title="Permalink to this headline">#</a></h1>
 <p>Topics:</p>
 <ul class="simple">
 <li><p>optimizer type: SGD, Adam</p></li>
-<li><p>batch size</p></li>
-<li><p>initialization: Xavier, Kaiming</p></li>
-<li><p>initialization: pretrained weights, and interation with training sample size</p></li>
 <li><p>learning rate</p></li>
+<li><p>batch size (a dataloader parameter but closely related to optimizers)</p></li>
+<li><p>shuffling (a dataloader parameter but closely related to optimizers)</p></li>
 <li><p>learning rate schedule</p></li>
 <li><p>momentum</p></li>
-<li><p>shuffling</p></li>
 <li><p>weight decay</p></li>
 <li><p>learning rate decay</p></li>
 <li><p>gradient clipping</p></li>
 <li><p>SMA</p></li>
-<li><p>gradient descent with noise</p></li>
 <li><p>monitoring gradients</p></li>
+<li><p>gradient descent with noise</p></li>
 </ul>
 </section>
 
@@ -492,11 +507,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="p3_dataloader.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="initialization.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3. </span>Efficent Data Loading for Model Training</p>
+            <p class="prev-next-title"><span class="section-number">4.1. </span>Initialization of Model Weights</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="arch.html" title="next page">

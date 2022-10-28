@@ -124,10 +124,27 @@ const thebe_selector_output = ".output, .cell_output"
    3. Efficent Data Loading for Model Training
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="optimizer.html">
-   4. Effect of Optimizers
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="network_weights.html">
+   4. Knobs for Network Weights: Initialization and Optimizers
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="initialization.html">
+     4.1. Initialization of Model Weights
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="optimizer.html">
+     4.2. Effect of Optimizers
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="arch.html">
@@ -153,8 +170,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="additional_topics.html">
    9. Optional: Selected topics on image classifiers
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -168,8 +185,8 @@ const thebe_selector_output = ".output, .cell_output"
     <a class="reference internal" href="self_supervised.html">
      9.2. Self Supervised Learning as a Pre-train Step for Image Classification
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -217,8 +234,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="keys.html">
    10. Keys to Some Projects
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -1425,6 +1442,7 @@ epoch 5: val loss = 1.62756, accuracy = 0.351
 <span class="c1"># Optional: freeze the random seed.</span>
 <span class="n">seed_everything</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">deterministic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limit_train_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">limit_val_batches</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">ImageClassifierCallback</span><span class="p">()])</span>
+<span class="c1"># Feel free to use `accelerator=&quot;gpu&quot;` if GPU is available.</span>
 <span class="n">model_v2</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model_v2</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
 </pre></div>
@@ -1510,6 +1528,7 @@ INFO:pytorch_lightning.callbacks.model_summary:
     <span class="n">logger</span><span class="o">=</span><span class="n">MLFlowLogger</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;image classifier&quot;</span><span class="p">,</span> <span class="n">tracking_uri</span><span class="o">=</span><span class="s2">&quot;./mlruns&quot;</span><span class="p">),</span>
     <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">ImageClassifierCallback</span><span class="p">(</span><span class="n">save_prediction_examples</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
 <span class="p">)</span>
+<span class="c1"># Feel free to use `accelerator=&quot;gpu&quot;` if GPU is available.</span>
 
 <span class="n">model_v3</span> <span class="o">=</span> <span class="n">ImageClassifier</span><span class="p">()</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model_v3</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
