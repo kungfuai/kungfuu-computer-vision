@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Few-shot Object Detection" href="fsod.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -107,7 +108,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../doc_ai.html">
    Document AI: Understanding Photos of Documents
@@ -132,6 +133,23 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../doc_ai_notebooks/donut_cord.html">
      Fine Tune DONUT on the CORD Dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="fsod.html">
+   Few-shot Object Detection
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Few Shot Object Detection with RetinaNet
     </a>
    </li>
   </ul>
@@ -487,14 +505,14 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="few-shot-object-detection-with-retinanet">
 <h1>Few Shot Object Detection with RetinaNet<a class="headerlink" href="#few-shot-object-detection-with-retinanet" title="Permalink to this headline">#</a></h1>
-<p>This tutorial is adapted from the open source <a class="reference external" href="https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/eager_few_shot_od_training_tf2_colab.ipynb">colab example</a>.</p>
+<p>This tutorial is adapted from this open source <a class="reference external" href="https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/eager_few_shot_od_training_tf2_colab.ipynb">colab example</a>.</p>
 <p>This notebook demonstrates fine tuning of a (TF2 friendly) RetinaNet architecture on very few examples of a novel class after initializing from a pre-trained COCO checkpoint.</p>
 <p>Estimated time to run through this colab (with GPU): &lt; 5 minutes.</p>
 <section id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install ipython-autotime
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install ipython-autotime
 %load_ext autotime
 </pre></div>
 </div>
@@ -523,7 +541,7 @@ time: 2.02 ms (started: 2021-12-09 03:00:17 +00:00)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install -U --pre tensorflow==&quot;2.2.0&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install -U --pre tensorflow==&quot;2.2.0&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -535,7 +553,7 @@ time: 2.02 ms (started: 2021-12-09 03:00:17 +00:00)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import os
 import pathlib
 
 # Clone the tensorflow models repository if it doesn&#39;t already exist
@@ -562,7 +580,7 @@ time: 4.46 s (started: 2021-12-09 03:00:17 +00:00)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install the Object Detection API</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install the Object Detection API</span>
 <span class="o">%%</span><span class="n">bash</span>
 <span class="n">cd</span> <span class="n">models</span><span class="o">/</span><span class="n">research</span><span class="o">/</span>
 <span class="n">protoc</span> <span class="n">object_detection</span><span class="o">/</span><span class="n">protos</span><span class="o">/*.</span><span class="n">proto</span> <span class="o">--</span><span class="n">python_out</span><span class="o">=.</span>
@@ -772,7 +790,7 @@ datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is in
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -811,7 +829,7 @@ datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is in
 <h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_image_into_numpy_array</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_image_into_numpy_array</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Load an image from file into a numpy array.</span>
 
 <span class="sd">  Puts image into numpy array to feed into tensorflow graph.</span>
@@ -881,7 +899,7 @@ datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is in
 ducky.  Note that the <a class="reference external" href="https://cocodataset.org/#explore">coco</a> dataset contains a number of animals, but notably, it does <em>not</em> contain rubber duckies (or even ducks for that matter), so this is a novel class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load images and visualize</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load images and visualize</span>
 <span class="n">train_image_dir</span> <span class="o">=</span> <span class="s1">&#39;models/research/object_detection/test_images/ducky/train/&#39;</span>
 <span class="n">train_images_np</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
@@ -918,7 +936,7 @@ ducky.  Note that the <a class="reference external" href="https://cocodataset.or
 <p>If you’d like to skip the manual annotation step, we totally understand.  In this case, simply skip this cell and run the next cell instead, where we’ve prepopulated the groundtruth with pre-annotated bounding boxes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gt_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gt_boxes</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">colab_utils</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">train_images_np</span><span class="p">,</span> <span class="n">box_storage_pointer</span><span class="o">=</span><span class="n">gt_boxes</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1249,7 +1267,7 @@ would prefer to just use our preannotated boxes.  Don’t forget
 to uncomment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># gt_boxes = [</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># gt_boxes = [</span>
 <span class="c1">#             np.array([[0.436, 0.591, 0.629, 0.712]], dtype=np.float32),</span>
 <span class="c1">#             np.array([[0.539, 0.583, 0.73, 0.71]], dtype=np.float32),</span>
 <span class="c1">#             np.array([[0.464, 0.414, 0.626, 0.548]], dtype=np.float32),</span>
@@ -1267,7 +1285,7 @@ to uncomment.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gt_boxes</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gt_boxes</span>
 </pre></div>
 </div>
 </div>
@@ -1292,7 +1310,7 @@ to uncomment.</p>
 loop below expects (e.g., everything converted to tensors, classes converted to one-hot representations, etc.).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="c1"># By convention, our non-background classes start counting at 1.  Given</span>
 <span class="c1"># that we will be predicting just one class, we will therefore assign it a</span>
 <span class="c1"># `class id` of 1.</span>
@@ -1335,7 +1353,7 @@ time: 32.1 ms (started: 2021-12-09 03:04:02 +00:00)
 <h1>Let’s just visualize the rubber duckies as a sanity check<a class="headerlink" href="#let-s-just-visualize-the-rubber-duckies-as-a-sanity-check" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
   <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
   <span class="n">boxes</span> <span class="o">=</span> <span class="n">gt_boxes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
@@ -1365,7 +1383,7 @@ time: 32.1 ms (started: 2021-12-09 03:04:02 +00:00)
 <p>For simplicity, we have hardcoded a number of things in this colab for the specific RetinaNet architecture at hand (including assuming that the image size will always be 640x640), however it is not difficult to generalize to other model configurations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Download the checkpoint and put it into models/research/object_detection/test_data/
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Download the checkpoint and put it into models/research/object_detection/test_data/
 
 !wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
 !tar -xf ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
@@ -1392,7 +1410,7 @@ time: 5.16 s (started: 2021-12-09 03:08:17 +00:00)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Building model and restoring weights for fine-tuning...&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1449,7 +1467,7 @@ time: 11.3 s (started: 2021-12-09 03:08:22 +00:00)
 <h1>Eager mode custom training loop<a class="headerlink" href="#eager-mode-custom-training-loop" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">set_learning_phase</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">set_learning_phase</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># These parameters can be tuned; since our training set has 5 images</span>
 <span class="c1"># it doesn&#39;t make sense to have a much larger batch size, though we could</span>
@@ -1569,7 +1587,7 @@ time: 56.2 s (started: 2021-12-09 03:08:33 +00:00)
 <h1>Load test images and run inference with new model!<a class="headerlink" href="#load-test-images-and-run-inference-with-new-model" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_image_dir</span> <span class="o">=</span> <span class="s1">&#39;models/research/object_detection/test_images/ducky/test/&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_image_dir</span> <span class="o">=</span> <span class="s1">&#39;models/research/object_detection/test_images/ducky/test/&#39;</span>
 <span class="n">test_images_np</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">):</span>
   <span class="n">image_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">test_image_dir</span><span class="p">,</span> <span class="s1">&#39;out&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">)</span>
@@ -1621,7 +1639,7 @@ time: 56.2 s (started: 2021-12-09 03:08:33 +00:00)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">imageio</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">freeimage</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imageio</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">freeimage</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
 
 <span class="n">anim_file</span> <span class="o">=</span> <span class="s1">&#39;duckies_test.gif&#39;</span>
 
@@ -1682,6 +1700,13 @@ File saved as /root/.imageio/freeimage/libfreeimage-3.16.0-linux64.so.
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="fsod.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Few-shot Object Detection</p>
+        </div>
+    </a>
 </div>
             </footer>
         </div>

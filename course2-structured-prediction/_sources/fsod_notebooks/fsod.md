@@ -1,4 +1,4 @@
-# Few-shot Object Detection: Train Object Detection Models with Just a Few Examples
+# Few-shot Object Detection
 
 ## Introduction
 
