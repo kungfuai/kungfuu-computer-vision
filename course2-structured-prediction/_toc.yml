@@ -8,6 +8,6 @@ chapters:
   sections:
   - file: doc_ai_notebooks/donut_rvl_cdip.ipynb
   - file: doc_ai_notebooks/donut_cord.ipynb
-- file: fsod/index.md
+- file: fsod_notebooks/fsod.md
   sections:
-  - file: fsod_noebooks/tf_ssd_fsod.ipynb
+  - file: fsod_notebooks/tf_retinanet_fsod.ipynb
