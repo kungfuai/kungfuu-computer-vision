@@ -586,8 +586,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please makse sure to remove the exclamation mark if you run the commands in the terminal.</span>
-<span class="o">!</span>wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-<span class="o">!</span>tar -xzf cifar-10-python.tar.gz
+<span class="o">!</span>wget<span class="w"> </span>https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+<span class="o">!</span>tar<span class="w"> </span>-xzf<span class="w"> </span>cifar-10-python.tar.gz
 </pre></div>
 </div>
 </div>
@@ -609,7 +609,7 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <p>Inspect the downloaded raw data and folder structure:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls -lht cifar-10-batches-py/
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>-lht<span class="w"> </span>cifar-10-batches-py/
 </pre></div>
 </div>
 </div>
@@ -631,7 +631,13 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <p>Loaded using the <code class="docutils literal notranslate"><span class="pre">unpickle</span></code> method provided below, each of the batch files contains a python dictionary with the following elements:</p>
 <p><em>data</em> – a 10000x3072 numpy array of uint8s. Each row of the array stores a 32x32 colour image. The first 1024 entries contain the red channel values, the next 1024 the green, and the final 1024 the blue. The image is stored in row-major order, so that the first 32 entries of the array are the red channel values of the first row of the image.</p>
 <p><em>labels</em> – a list of 10000 numbers in the range 0-9. Each number maps to a class label. For information about the 10 classes, please refer to the <a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 website</a>.</p>
-<p><strong>Your task</strong>: Fill in the missing code in the next cell, so that it can pass the test that follows.</p>
+<p><strong>Your task</strong>: Fill in the missing code in the next cell, so that it can pass the test that follows. Uncomment the last line to visualize the data.</p>
+<p>Please refer to the comments and docstrings in the code below for additional context and tips. Some additional resources for optional reading:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.kaggle.com/code/thestranger7/basics-of-numpy-for-machine-learning">basics for <code class="docutils literal notranslate"><span class="pre">numpy</span></code> in machine learning</a></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/code/paulrohan2020/scaler-vector-tensor-basics-for-neural-network/notebook">vectors and tensors in neural networks</a></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/code/namanj27/numpy-image-processing-tutorial/notebook"><code class="docutils literal notranslate"><span class="pre">numpy</span></code> image processing tutorial</a></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
@@ -649,6 +655,14 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 
 
 <span class="k">def</span> <span class="nf">reshape_numpy_image</span><span class="p">(</span><span class="n">one_numpy_image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Why reshaping?</span>
+<span class="sd">    </span>
+<span class="sd">    The raw image data is in a &quot;flattened&quot; shape. Each image</span>
+<span class="sd">    is represented as a long vector. In order to display</span>
+<span class="sd">    the image, and to feed it to a convolutional neural network,</span>
+<span class="sd">    we need to reshape it to the original shape of (height, width, num_channels),</span>
+<span class="sd">    which is a 3-dimentional array of height x width x num_channels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">shape_with_channels_first</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>  <span class="c1"># (channels, height, width), channels first</span>
     <span class="n">shape_with_channels_last</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (height, width, channels), channels last</span>
     <span class="c1"># TODO: in the next line, should we use shape_with_channels_first or shape_with_channels_last?</span>
@@ -740,7 +754,7 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <section id="step-2-visualize-the-image-data">
 <h2><span class="section-number">1.2. </span>Step 2: Visualize the image data<a class="headerlink" href="#step-2-visualize-the-image-data" title="Permalink to this headline">#</a></h2>
 <p>However, passing the unit tests may not be enough. The content of the image may not make sense even if the shape is correct, depending on how the reshaping of numpy arrays is done.</p>
-<p>In the next cells, display several images from the dataset together with the label. Visually check the image and the label. A helper function is provided.</p>
+<p>In the next cells, display several images from the dataset together with the label. Visually check the image and the label. A helper function <code class="docutils literal notranslate"><span class="pre">display_image_with_label</span></code> is provided.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -753,16 +767,14 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="c1"># TODO: add code to the next cells to display at least 2 images from CustomDataset.</span>
-<span class="c1"># You can use one cell for each image.</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Add code to the next cells to display at least 2 images from <code class="docutils literal notranslate"><span class="pre">CustomDataset</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: display the first image and label</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: display the first image and label, using display_image_with_label().</span>
 </pre></div>
 </div>
 </div>
@@ -814,7 +826,7 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <section id="display-images-in-a-grid-using-matplotlib">
 <h3><span class="section-number">1.3.1. </span>Display images in a grid using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code><a class="headerlink" href="#display-images-in-a-grid-using-matplotlib" title="Permalink to this headline">#</a></h3>
 <p>You can also display multiple images in one figure. This way you can visualize a batch of images easily. Below is a function and snippet to start with. You may need to transpose the image for display purpose.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
     <span class="n">nrows</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">+</span> <span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">ncols</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ncols</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nrows</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)):</span>
@@ -832,6 +844,10 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: visualize a batch of images</span>
+<span class="c1">#</span>
+<span class="c1">#  Hint: the `images` returned from the data_loader was</span>
+<span class="c1">#     a tensor and needed to be converted to a numpy array</span>
+<span class="c1">#     then transposed. `images.numpy()` is needed.</span>
 </pre></div>
 </div>
 </div>
@@ -853,7 +869,7 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_custom_dataset_returns_images_with_channels_first</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Check the shape of the image, especially the channels axis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the shape of the image, especially the channels axis.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: fill in.</span>
     <span class="k">pass</span>

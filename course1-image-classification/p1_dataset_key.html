@@ -572,8 +572,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please makse sure to remove the exclamation mark if you run the commands in the terminal.</span>
-<span class="o">!</span>wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-<span class="o">!</span>tar -xzf cifar-10-python.tar.gz
+<span class="o">!</span>wget<span class="w"> </span>https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+<span class="o">!</span>tar<span class="w"> </span>-xzf<span class="w"> </span>cifar-10-python.tar.gz
 </pre></div>
 </div>
 </div>
@@ -595,7 +595,7 @@ cifar-10-python.tar 100%[===================&gt;] 162.60M  45.0MB/s    in 4.0s
 <p>Inspect the downloaded raw data and folder structure:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls -lht cifar-10-batches-py/
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>-lht<span class="w"> </span>cifar-10-batches-py/
 </pre></div>
 </div>
 </div>
@@ -908,7 +908,7 @@ Test passed!
 <span class="c1">#     pass</span>
 
 <span class="k">def</span> <span class="nf">test_custom_dataset_returns_images_with_channels_first</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Check the shape of the image, especially the channels axis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the shape of the image, especially the channels axis.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">CustomDataset</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

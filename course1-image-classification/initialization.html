@@ -791,7 +791,7 @@ title="Print to PDF"
 <span class="c1">##############################################################</span>
     
 <span class="k">def</span> <span class="nf">visualize_gradients</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="n">print_variance</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Inputs:</span>
 <span class="sd">        net - Object of class BaseNetwork</span>
 <span class="sd">        color - Color in which we want to visualize the histogram (for easier separation of activation functions)</span>
@@ -1166,7 +1166,7 @@ Layer 7 (Linear) - Variance: 0.24810270965099335
 <p>Now is our favorate part: the showdown of different initialization recipes. To save time, only a subset of training and validation data is used: controlled by <code class="docutils literal notranslate"><span class="pre">limit_train_batches</span></code> and <code class="docutils literal notranslate"><span class="pre">limit_val_batches</span></code> of the Trainer class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install pytorch-lightning<span class="o">==</span><span class="m">1</span>.6.4 torchmetrics
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pytorch-lightning<span class="o">==</span><span class="m">1</span>.6.4<span class="w"> </span>torchmetrics
 </pre></div>
 </div>
 </div>

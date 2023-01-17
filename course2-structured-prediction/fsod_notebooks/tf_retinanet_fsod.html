@@ -830,7 +830,7 @@ datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is in
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_image_into_numpy_array</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Load an image from file into a numpy array.</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Load an image from file into a numpy array.</span>
 
 <span class="sd">  Puts image into numpy array to feed into tensorflow graph.</span>
 <span class="sd">  Note that by convention we put it into a numpy array with shape</span>
@@ -855,7 +855,7 @@ datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is in
                     <span class="n">category_index</span><span class="p">,</span>
                     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
                     <span class="n">image_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Wrapper function to visualize detections.</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Wrapper function to visualize detections.</span>
 
 <span class="sd">  Args:</span>
 <span class="sd">    image_np: uint8 numpy array with shape (img_height, img_width, 3)</span>
@@ -1488,7 +1488,7 @@ time: 11.3 s (started: 2021-12-09 03:08:22 +00:00)
 
 <span class="c1"># Set up forward + backward pass for a single train step.</span>
 <span class="k">def</span> <span class="nf">get_model_train_step_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">vars_to_fine_tune</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Get a tf.function for training step.&quot;&quot;&quot;</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Get a tf.function for training step.&quot;&quot;&quot;</span>
 
   <span class="c1"># Use tf.function for a bit of speed.</span>
   <span class="c1"># Comment out the tf.function decorator if you want the inside of the</span>
@@ -1497,7 +1497,7 @@ time: 11.3 s (started: 2021-12-09 03:08:22 +00:00)
   <span class="k">def</span> <span class="nf">train_step_fn</span><span class="p">(</span><span class="n">image_tensors</span><span class="p">,</span>
                     <span class="n">groundtruth_boxes_list</span><span class="p">,</span>
                     <span class="n">groundtruth_classes_list</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A single training iteration.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A single training iteration.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      image_tensors: A list of [1, height, width, 3] Tensor of type tf.float32.</span>
@@ -1597,7 +1597,7 @@ time: 56.2 s (started: 2021-12-09 03:08:33 +00:00)
 <span class="c1"># Again, uncomment this decorator if you want to run inference eagerly</span>
 <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
 <span class="k">def</span> <span class="nf">detect</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Run detection on an input image.</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Run detection on an input image.</span>
 
 <span class="sd">  Args:</span>
 <span class="sd">    input_tensor: A [1, height, width, 3] Tensor of type tf.float32.</span>
