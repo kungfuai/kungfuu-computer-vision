@@ -17,7 +17,7 @@ At the end of the course. we hope you feel prepared to work on a practical proje
 
 **How to use the course materials and organize your work**
 
-You can run the code in each course project using Colab notebooks, whenever you see a rocket-shaped launch button in the top right corner of the page. This is a quick way to get started, without needing to install CUDA drivers and other dependencies. Alternatively, you can create a repo and accumulate source code as you evolve it in the course. Either way works.
+You can run the code in each course project using Colab notebooks, whenever you see a ![rocket-shaped launch button] (./colab_launch_button.png) in the top right corner of the page. This is a quick way to get started, without needing to install CUDA drivers and other dependencies. Alternatively, you can create a repo and accumulate source code as you evolve it in the course. Either way works.
 
 The earlier projects of the course are more like code labs, and focus on a step by step guide to set up the code base and modules to perform model training experiments. You are tasked with filling out code blocks or functions to make the system work. This likely resembles the *development* phase of a practical project, where the emphasis may be put on code quality and readability.
 
